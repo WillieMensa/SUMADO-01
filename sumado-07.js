@@ -1,12 +1,18 @@
 //	sumado.js
 //	codigo para plantear un sumado. Por ahora de 3 x 3
-//	seguir en linea 246 (25/12/2016)
+//	seguir en linea 263 (25/12/2016)
 //	Tarea actual
-//		corregir onDragStart. Debe desocupar el vértice
-//		posible error en el cálculo de nvertice
+//		Preparar vector con datos de vértices
+//			valor objetivo
+//			valor asignado o vacio
+//			Tener en cuenta asociar las posiciones en que se deja el 
+//			sprite-numero con los vertices para posibilitar analisis.
 
 //		Preparar vector con numeros a asignar (sprites)
 //			valor numerico
+//		Preparar vector para estacionamiento de numeros a asignar
+//			id cochera
+//			valor ocupado o vacio
 
 //	1	Tomar / generar la data de poligonos y vértices: (linea 150)
 //		diagrama con la correspondecia de vértices a su id y
@@ -91,7 +97,7 @@ function setup() {
 	draggableObjects = new PIXI.Container();
 
 	// creacion de los sprites draggables para cada nro
-	for (var i = 1; i < 10; i++)
+	for (var i = 0; i < 10; i++)
 	{
 		cImagen = "num0" + i + ".png";
 		numTexture = PIXI.utils.TextureCache[cImagen];
@@ -145,13 +151,11 @@ function setup() {
 
 		if (DEBUG) 
 		{
-				//	console.log( i + " es draggable " + aNumeros[i].draggable );
+				console.log( i + " es draggable " + aNumeros[i].draggable );
 		}
 
 	}
 
-
-	console.log("draggables:" + draggableObjects );
 
 	//	generar o leer datos de los vértices
 	//	por ahora 'hard coded' para probar
@@ -162,42 +166,25 @@ function setup() {
 	//		id del vértice (codificado adecuadamente para identificarlo facil)
 	//		valor objetivo
 	//		id.num colocado: codigo del número colocado en el vértice o señal de estar vacio
-	//		indicador de vértice-dato (fijo)
+	//
 	//	[1, 6, 9, 8, 7, 4, 5, 2, 3]
 	for ( i = 0; i < 9; i++)
 	{
-		aVertices[i] = [i, aVertex[i], "", false]
+		//	aVertices[i] = [i][aVertex[i],[]]
+		aVertices[i] = [i, aVertex[i], "",]
 	}
 
-	//	asignamos los vértices datos. Por ahora un solo modelo. Datos son los vertices 2 y 6
-	aVertices[2][3] = true;
-	aVertices[2][2] = aVertices[2][1];
-	//	asigno la posición fija a los datos. 
-	//		nVertice = Math.floor( newPosition.x / gridstep ) + 3 * Math.floor( newPosition.y / gridstep ) 
-	aNumeros[aVertices[2][2]].position.x = ( aVertices[2][0] % 3 ) * 200 + 100;
-	aNumeros[aVertices[2][2]].position.y = Math.floor( aVertices[2][0] / 3 ) * 200 + 100 ;
-	aNumeros[2].draggable = false;
-
-	aVertices[6][3] = true;
-	aVertices[6][2] = aVertices[6][1];
-	//	asigno la posición fija a los datos
-	aNumeros[aVertices[6][2]].position.x = ( aVertices[6][0] % 3 ) * 200 + 100;
-	aNumeros[aVertices[6][2]].position.y = Math.floor( aVertices[6][0] / 3 ) * 200 + 100 ;
-	aNumeros[6].draggable = false;
-
-
-	if (DEBUG) 
+	for ( i = 0; i < 9; i++)
 	{
-		for ( i = 0; i < 9; i++)
-		{
-			console.log( "aVertices[" + i + "]: " + aVertices[i] );
-		}
+		console.log( "aVertices[" + i + "]: " + aVertices[i] );
+		//console.log( "aVertices[" + i + "][0]: " + aVertices[i][0] );
+		//	console.log( "aVertices[" + i + "]: " + aVertices[i][0] + ',' + aVertices[i][1] + ',' + aVertices[i][2] );
 	}
 
 	////////////////////////////////////////////////////
 	//	colocamos las sumas de los poligonos en posición
 	aSumaPolig = [14, 16, 26, 22, 14, 12];
-	aPosPolig = [[210, 140],[140, 205],[370, 170],[170, 370],[410, 340],[340, 405] ];
+	aPosPolig = [[210, 140],[140, 205],[370, 170],[170, 370],[340, 405],[410, 340]];
 
 	for ( i = 0; i < 6; i++)
 	{
@@ -247,38 +234,13 @@ function onDragStart(event)
     // we want to track the movement of this particular touch
     this.data = event.data;
     this.alpha = 0.5;
-
-	console.log( " this.data: " + this.val );
-
-	if ( this.val != aVertices[2][1] && this.val != aVertices[6][1]  )
-	{
-	    this.dragging = true;
-	}
-
-	var newPosition = this.data.getLocalPosition(this.parent);
+    this.dragging = true;
 
 	/////////////////////////////
 	//	debug
-	console.log( "inicio onDragStart ----------------------------" );
-
-	if (this.data)
-	{
-	}
-	//	si estamos tomando una ficha numero que ocupa un vertice, hay que desocupar el vertice
-    if (this.dragging)
-	{
-		if (newPosition.x > 0 && newPosition.x < 600 && newPosition.y > 0 && newPosition.y < 600 )
-		{
-			var newPosition = this.data.getLocalPosition(this.parent);
-			nVertice = Math.floor( newPosition.x / gridstep ) + 3 * Math.floor( newPosition.y / gridstep ) 
-			console.log( "Hemos tomado una ficha-numero ubicada en un vertice")
-			console.log( "nVertice =|" + nVertice + "|" )
-			console.log( "aVertices[nVertice] =|" + aVertices[nVertice] + "|" )
-			aVertices[nVertice][2] = ''
-		}
-	}
+	console.log( "En inicio, this.position: " + this.position.x + "," + this.position.y );
 	//	console.log( "   this.parent: " + this.data.getLocalPosition.x + "," + this.data.getLocalPosition.y );
-	console.log( "saliendo de onDragStart ----------------------------" );
+
 }
 
 
@@ -348,7 +310,6 @@ function onDragEnd()
 
         this.position.x = newPosition.x;
         this.position.y = newPosition.y;
-		console.log( "--------------------------------------------------" );
     }
 
 	this.alpha = 1;

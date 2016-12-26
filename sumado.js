@@ -1,17 +1,12 @@
 //	sumado.js
 //	codigo para plantear un sumado. Por ahora de 3 x 3
+//	seguir en linea 246 (25/12/2016)
 //	Tarea actual
-//		Preparar vector con datos de vértices
-//			valor objetivo
-//			valor asignado o vacio
-//			Tener en cuenta asociar las posiciones en que se deja el 
-//			sprite-numero con los vertices para posibilitar analisis.
+//		corregir onDragStart. Debe desocupar el vértice
+//		posible error en el cálculo de nvertice
 
 //		Preparar vector con numeros a asignar (sprites)
 //			valor numerico
-//		Preparar vector para estacionamiento de numeros a asignar
-//			id cochera
-//			valor ocupado o vacio
 
 //	1	Tomar / generar la data de poligonos y vértices: (linea 150)
 //		diagrama con la correspondecia de vértices a su id y
@@ -46,9 +41,11 @@ stage.interactive = true;
 //Define any variables that are used in more than one function
 var t = undefined,
     pointer = undefined,
-    grid = undefined,
+    gridstep = 200,
     draggableObjects = undefined,
 	aVertices = [],				//	array con datos de vertices
+	//	aVPos contiene las posición de los vértices
+	aVPos = [ [100,100], [300,100], [500,100], [100,300], [300,300], [500,300], [100,500], [300,500], [500,500] ],
 	DEBUG = true;
 
 
@@ -64,17 +61,20 @@ function setup() {
 	//	$.getJSON('http://skielcast.pythonanywhere.com/2x3_v1', function(data) {	});
 
 	//	Set the canvas's border style and background color
-	renderer.view.style.border = "4px solid red";
+	renderer.view.style.border = "5px solid blue";
 	renderer.backgroundColor = "0xeeeeee";
 
 	//Define variables that might be used in more than one function
-	var tablero, i,	aSumaPolig, aPosPolig ;
-	var message 
+	var tablero, i,	aSumaPolig, 
+	   	aVertex = undefined,
+	   	message = undefined,
+		aPosPolig ;
+
 
 	//	pruebo armar un array con los numeros
 	var num, cImagen, aNumeros = [];
 	//	grilla para posiciones de detencion fijas
-	grid = [200,200];
+	//	grid = [200,200];
 
 
 	//	1. Access the `TextureCache` directly. esto sería el piso
@@ -91,7 +91,7 @@ function setup() {
 	draggableObjects = new PIXI.Container();
 
 	// creacion de los sprites draggables para cada nro
-	for (var i = 0; i < 10; i++)
+	for (var i = 1; i < 10; i++)
 	{
 		cImagen = "num0" + i + ".png";
 		numTexture = PIXI.utils.TextureCache[cImagen];
@@ -137,6 +137,7 @@ function setup() {
 		//	num.draggable();
 
 		aNumeros[i] = num;
+		aNumeros[i].val = i;
 		
 		//	Make the sprites draggable
 		//	t.makeDraggable(aNumeros[i]);
@@ -144,23 +145,59 @@ function setup() {
 
 		if (DEBUG) 
 		{
-				console.log( i + " es draggable " + aNumeros[i].draggable );
+				//	console.log( i + " es draggable " + aNumeros[i].draggable );
 		}
 
 	}
 
+
+	console.log("draggables:" + draggableObjects );
+
+	//	generar o leer datos de los vértices
+	//	por ahora 'hard coded' para probar
+	aVertex = [1, 6, 9, 8, 7, 4, 5, 2, 3]
 
 	////////////////////////////////////////////////////
 	//	Preparo un vector con la data de los vértices:
 	//		id del vértice (codificado adecuadamente para identificarlo facil)
 	//		valor objetivo
 	//		id.num colocado: codigo del número colocado en el vértice o señal de estar vacio
-	//
+	//		indicador de vértice-dato (fijo)
+	//	[1, 6, 9, 8, 7, 4, 5, 2, 3]
+	for ( i = 0; i < 9; i++)
+	{
+		aVertices[i] = [i, aVertex[i], "", false]
+	}
+
+	//	asignamos los vértices datos. Por ahora un solo modelo. Datos son los vertices 2 y 6
+	aVertices[2][3] = true;
+	aVertices[2][2] = aVertices[2][1];
+	//	asigno la posición fija a los datos. 
+	//		nVertice = Math.floor( newPosition.x / gridstep ) + 3 * Math.floor( newPosition.y / gridstep ) 
+	aNumeros[aVertices[2][2]].position.x = ( aVertices[2][0] % 3 ) * 200 + 100;
+	aNumeros[aVertices[2][2]].position.y = Math.floor( aVertices[2][0] / 3 ) * 200 + 100 ;
+	aNumeros[2].draggable = false;
+
+	aVertices[6][3] = true;
+	aVertices[6][2] = aVertices[6][1];
+	//	asigno la posición fija a los datos
+	aNumeros[aVertices[6][2]].position.x = ( aVertices[6][0] % 3 ) * 200 + 100;
+	aNumeros[aVertices[6][2]].position.y = Math.floor( aVertices[6][0] / 3 ) * 200 + 100 ;
+	aNumeros[6].draggable = false;
+
+
+	if (DEBUG) 
+	{
+		for ( i = 0; i < 9; i++)
+		{
+			console.log( "aVertices[" + i + "]: " + aVertices[i] );
+		}
+	}
 
 	////////////////////////////////////////////////////
 	//	colocamos las sumas de los poligonos en posición
 	aSumaPolig = [14, 16, 26, 22, 14, 12];
-	aPosPolig = [[210, 140],[140, 205],[370, 170],[170, 370],[340, 405],[410, 340]];
+	aPosPolig = [[210, 140],[140, 205],[370, 170],[170, 370],[410, 340],[340, 405] ];
 
 	for ( i = 0; i < 6; i++)
 	{
@@ -210,50 +247,108 @@ function onDragStart(event)
     // we want to track the movement of this particular touch
     this.data = event.data;
     this.alpha = 0.5;
-    this.dragging = true;
+
+	console.log( " this.data: " + this.val );
+
+	if ( this.val != aVertices[2][1] && this.val != aVertices[6][1]  )
+	{
+	    this.dragging = true;
+	}
+
+	var newPosition = this.data.getLocalPosition(this.parent);
 
 	/////////////////////////////
 	//	debug
-	console.log( "En inicio, this.position: " + this.position.x + "," + this.position.y );
-	//	console.log( "   this.parent: " + this.data.getLocalPosition.x + "," + this.data.getLocalPosition.y );
+	console.log( "inicio onDragStart ----------------------------" );
 
+	if (this.data)
+	{
+	}
+	//	si estamos tomando una ficha numero que ocupa un vertice, hay que desocupar el vertice
+    if (this.dragging)
+	{
+		if (newPosition.x > 0 && newPosition.x < 600 && newPosition.y > 0 && newPosition.y < 600 )
+		{
+			var newPosition = this.data.getLocalPosition(this.parent);
+			nVertice = Math.floor( newPosition.x / gridstep ) + 3 * Math.floor( newPosition.y / gridstep ) 
+			console.log( "Hemos tomado una ficha-numero ubicada en un vertice")
+			console.log( "nVertice =|" + nVertice + "|" )
+			console.log( "aVertices[nVertice] =|" + aVertices[nVertice] + "|" )
+			aVertices[nVertice][2] = ''
+		}
+	}
+	//	console.log( "   this.parent: " + this.data.getLocalPosition.x + "," + this.data.getLocalPosition.y );
+	console.log( "saliendo de onDragStart ----------------------------" );
 }
 
 
 function onDragEnd()
 {
-	var gridstep, nLineaOffset = 100;
+	var nLineaOffset = 100;
 
 	//	this sería el sprite con numero a posicionar
     if (this.dragging)
     {
         var newPosition = this.data.getLocalPosition(this.parent);
 		//	parece que this.parent es el puntero del mouse
+		//	newPosition tiene las coordenadas del puntero del mouse
+		console.log( "this.val: " + this.val)
 
-		/////////////////////////////////////////////////////
-		//	aca modifico para tratar de introducir una grilla
+		//	debo detectar si estoy en el area del tablero o area de estacionamiento de fichas
+		//	ficha es un sprite asociado a un número a colocar en tablero.
+		console.log( "--------------------------------------------------" );
+		console.log( "Iniciando onDragEnd puntero en : " + newPosition.x.toString().substr(0,8) +','+ newPosition.y.toString().substr(0,8) );
 
-		gridstep = grid[0];
-		console.log( "newPosition.x : " + newPosition.x );
-		console.log( "Math.round(newPosition.x / gridstep): " + Math.round(newPosition.x / gridstep) );
-		console.log( "(newPosition.x / gridstep): " + (newPosition.x / gridstep) );
-		newPosition.x = nLineaOffset + ( Math.round(( newPosition.x - nLineaOffset )/ gridstep ) * gridstep );
 
-		gridstep = grid[1];											
-		newPosition.y = nLineaOffset + ( Math.round((newPosition.y - nLineaOffset )/ gridstep ) * gridstep );
-		//	lo que sigue no lo uso por ahora 
-		//		if(containment && !(x > 0 || x2 < containment.width))
-		//		{
-		//			x += (x > 0) ? -grid : grid;
-		//		}
+		//	Estamos en el tablero o afuera?
+		if ( newPosition.x < 0 || newPosition.x > 600 || newPosition.y < 0 || newPosition.y > 600 )
+		{
+			//	estamos afuera del tablero. va al estacionamiento.
+			console.log( "afuera del tablero!.  ficha-numero va al estacionamiento")	
+		} else { 
+			//	dentro del tablero
+			console.log( "dentro del tablero")
+			//	usamos sentencia switch para determinar en que vertice debe caer la ficha numérica
+			//	primero evaluamos el vértice que corresponde
+			//	El nro de vertice ( nVertice ) estará dado por
+			nVertice = Math.floor( newPosition.x / gridstep ) + 3 * Math.floor( newPosition.y / gridstep ) 
 
-		console.log( "nLineaOffset + Math.round(newPosition.x / gridstep) * gridstep;" + newPosition.x )
-		console.log( "nLineaOffset + Math.round(newPosition.y / gridstep) * gridstep;" + newPosition.y )		
+			//	console.log( "Math.floor( newPosition.x / gridstep ) = " + Math.floor( newPosition.x / gridstep ) )
+			//	console.log( "3 * Math.floor( newPosition.y / gridstep = " + 3 * Math.floor( newPosition.y / gridstep ) )
+			console.log( "nVertice = " + nVertice )
+			//	console.log( "aVertices[nVertice] = " + aVertices[nVertice,1] + ',' + aVertices[nVertice,2] + ',' + aVertices[nVertice,3] )
+			console.log( "aVertices[nVertice] = |" + aVertices[nVertice] + '|' )
+
+			//	Ahora distinguir si nVertice está libre u ocupado
+			if (aVertices[nVertice][2] === "" )
+			{
+				//	si vertice está libre
+				console.log( "vertice está libre!")
+				//	voy a ustilizar la posición del vertice 'almacenada' en el mismo
+				newPosition.x = aVPos[nVertice][0];
+				newPosition.y = aVPos[nVertice][1];	
+				//	y amrco al vertice como ocupado
+				aVertices[nVertice][2] = this.val
+
+			} else { 
+				//	block of code to be executed if the condition is false
+				//	sino
+				//		va al estacionamiento.
+				console.log( "ficha-numero va al estacionamiento")
+				// move the sprite to its designated position
+				newPosition.x = 700;
+				newPosition.y = 80 + this.val * 50;
+
+			}
+
+		}
+
 		console.log( "saliendo de ondragmove --> posicion: " + newPosition.x + ", " + newPosition.y );
 		/////////////////////////////////////////////////////
 
         this.position.x = newPosition.x;
         this.position.y = newPosition.y;
+		console.log( "--------------------------------------------------" );
     }
 
 	this.alpha = 1;
@@ -285,9 +380,6 @@ function onDragMove()
 }
 
 
-// run the render loop
-//	animate();
-
 
 function animate() {
 
@@ -298,9 +390,6 @@ function animate() {
 
 	//Run the current state
 	//	state();
-
-	//Update Tink
-	//	t.update();
 
     // render the stage
     renderer.render(stage);

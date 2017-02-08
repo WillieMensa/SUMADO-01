@@ -1,0 +1,234 @@
+<?xml version="1.0" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+
+	<link href="https://fonts.googleapis.com/css?family=Amatica+SC:700|Bangers|Bungee|Bungee+Inline|Dosis|Sigmar+One" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css?family=Luckiest+Guy|Pacifico|Carter+One" rel="stylesheet">
+
+	<style>* {padding: 0; margin: 0}
+
+	body {
+		color: #111;
+		font-family: 'Luckiest Guy', cursive;
+		font-size: 5.00em;
+		height: auto;
+		margin:10; 
+		padding:10; 
+		border:0; 
+		background:white; 
+		overflow:hidden; 
+	}
+	  div { position:absolute; margin:0; padding:0; border:0; outline:0; 
+		font-family:arial; font-size:12px; color:white; text-align:center; }
+	  #header { width:100%; top:24px; left:0px; }
+	  #header a { color:white; }
+	  #stats { width:100%; bottom:24px; left:0px; }
+	  #playbutton:hover { background:red; }
+	  #viewport { width:640px; height:480px; overflow:hidden; top:50%; left:50%; margin-left:-320px; margin-top:-240px; }
+	  #level { width:2048px; height:100%; top:0px; left:0px; }
+	  #background { width:100%; height:100%; top:0px; left:0px; }
+	  .sprite { background-image:url(spritesheet.png); width:32px; height:32px; }
+	  .trazo { fill:white; stroke:black;stroke-width:8;opacity:1.0; }
+	  .auxiliar { fill:white; stroke:#456;stroke-width:1;opacity:1.0; }
+
+	  .over { fill:url(#grad1);stroke:black;stroke-width:0;opacity:0.95 }
+	  .up	{ fill:#f60;stroke:black;stroke-width:0;opacity:0.95		}
+	  .down	{ fill:#c50;stroke:black;stroke-width:0;opacity:0.95		}
+	  .txtblanco { font-family: Carter One; font-size  : 40; stroke : #000; stroke-width : 1; fill : #fff; }
+	  .flecha { fill:url(#grad2);stroke:black;stroke-width:0;opacity:0.95 }
+
+ 
+
+
+	</style>
+
+
+	<svg width="100%" height="100%">
+
+			<!-- <stop offset="0%" style="stop-color:#73733d;stop-opacity:1" /> 
+			c60
+			fc9
+
+			-->
+
+	<defs>
+		<linearGradient id="grad1" x1="0%" y1="100%" x2="0%" y2="00%">
+			<stop offset="0%" style="stop-color:#c50;stop-opacity:1" />
+			<stop offset="100%" style="stop-color:#fc6;stop-opacity:1" />
+		</linearGradient>
+
+		<linearGradient id="grad2" x1="0%" y1="100%" x2="0%" y2="00%">
+			<stop offset="0%" style="stop-color:#540;stop-opacity:1" />
+			<stop offset="100%" style="stop-color:#ed0;stop-opacity:1" />
+		</linearGradient>
+
+	</defs>
+
+	<!-- Outline the SVG viewport. -->
+
+	<!-- boton jugar -->
+	<rect x="020" y="10" rx="24" ry="24" width="200" height="48" class = "over" />	
+	<rect x="240" y="10" rx="24" ry="24" width="200" height="48" class = "up"	/> 
+	<rect x="460" y="10" rx="24" ry="24" width="200" height="48" class = "down" /> 
+
+	<!-- boton ayuda -->
+	<rect x="020" y="70" rx="24" ry="24" width="200" height="48" class = "over" />	
+	<rect x="240" y="70" rx="24" ry="24" width="200" height="48" class = "up"	/>
+	<rect x="460" y="70" rx="24" ry="24" width="200" height="48" class = "down" />
+
+	<!-- boton puntajes -->
+	<rect x="020" y="130" rx="24" ry="24" width="200" height="48" class = "over" />
+	<rect x="240" y="130" rx="24" ry="24" width="200" height="48" class = "up"	 />
+	<rect x="460" y="130" rx="24" ry="24" width="200" height="48" class = "down" />
+
+	<!-- boton inicio -->
+	<rect x="020" y="190" rx="24" ry="24" width="200" height="48" class = "over" />
+	<rect x="240" y="190" rx="24" ry="24" width="200" height="48" class = "up"	 />
+	<rect x="460" y="190" rx="24" ry="24" width="200" height="48" class = "down" />
+
+	<!-- boton salir -->
+	<rect x="020" y="250" rx="24" ry="24" width="200" height="48" class = "over" />
+	<rect x="240" y="250" rx="24" ry="24" width="200" height="48" class = "up"	 />
+	<rect x="460" y="250" rx="24" ry="24" width="200" height="48" class = "down" />
+
+	<!-- boton volver -->
+	<rect x="020" y="310" rx="24" ry="24" width="200" height="48" class = "over" />
+	<rect x="240" y="310" rx="24" ry="24" width="200" height="48" class = "up"	 />
+	<rect x="460" y="310" rx="24" ry="24" width="200" height="48" class = "down" />
+
+
+
+	<text class = "txtblanco" x="068" y="45">Jugar</text>
+	<text class = "txtblanco" x="288" y="45">Jugar</text>
+	<text class = "txtblanco" x="508" y="45">Jugar</text>
+	
+	<text class = "txtblanco" x="060" y="105">Ayuda</text>
+	<text class = "txtblanco" x="280" y="105">Ayuda</text>
+	<text class = "txtblanco" x="500" y="105">Ayuda</text>
+
+	<text class = "txtblanco" x="046" y="165">Puntaje</text>
+	<text class = "txtblanco" x="266" y="165">Puntaje</text>
+	<text class = "txtblanco" x="486" y="165">Puntaje</text>
+
+	<text class = "txtblanco" x="068" y="225">Inicio</text>
+	<text class = "txtblanco" x="288" y="225">Inicio</text>
+	<text class = "txtblanco" x="508" y="225">Inicio</text>
+	
+	<text class = "txtblanco" x="076" y="285">Salir</text>
+	<text class = "txtblanco" x="296" y="285">Salir</text>
+	<text class = "txtblanco" x="516" y="285">Salir</text>
+
+	<text class = "txtblanco" x="060" y="345">Volver</text>
+	<text class = "txtblanco" x="280" y="345">Volver</text>
+	<text class = "txtblanco" x="500" y="345">Volver</text>
+
+	<text fill="#060" font-size="112" font-family="Luckiest Guy" x="050" y="460">SU-MA-DO</text>
+
+	<!-- Las fichas con numeros para los vertices -->
+	<circle id="circ10" cx="050" cy="520" r="30" class = "trazo" />
+	<circle id="circ10" cx="120" cy="520" r="30" class = "trazo" />
+	<circle id="circ10" cx="190" cy="520" r="30" class = "trazo" />
+	<circle id="circ10" cx="260" cy="520" r="30" class = "trazo" />
+	<circle id="circ10" cx="330" cy="520" r="30" class = "trazo" />
+	<circle id="circ10" cx="400" cy="520" r="30" class = "trazo" />
+	<circle id="circ10" cx="470" cy="520" r="30" class = "trazo" />
+	<circle id="circ10" cx="540" cy="520" r="30" class = "trazo" />
+	<circle id="circ10" cx="610" cy="520" r="30" class = "trazo" />
+	<circle id="circ10" cx="680" cy="520" r="30" class = "trazo" />
+
+	<text fill="#060" font-size="56" font-family="Luckiest Guy" x="033" y="540">0</text>
+	<text fill="#060" font-size="56" font-family="Luckiest Guy" x="108" y="540">1</text>
+	<text fill="#060" font-size="56" font-family="Luckiest Guy" x="177" y="540">2</text>
+	<text fill="#060" font-size="56" font-family="Luckiest Guy" x="246" y="540">3</text>
+	<text fill="#060" font-size="56" font-family="Luckiest Guy" x="314" y="540">4</text>
+	<text fill="#060" font-size="56" font-family="Luckiest Guy" x="385" y="540">5</text>
+	<text fill="#060" font-size="56" font-family="Luckiest Guy" x="453" y="540">6</text>
+	<text fill="#060" font-size="56" font-family="Luckiest Guy" x="526" y="540">7</text>
+	<text fill="#060" font-size="56" font-family="Luckiest Guy" x="594" y="540">8</text>
+	<text fill="#060" font-size="56" font-family="Luckiest Guy" x="665" y="540">9</text>
+
+
+	<!-- lineas de guia para medir -->
+<!-- 
+	<line x1="000" y1="490" x2="600" y2="490" class = "auxiliar" />
+	<line x1="000" y1="500" x2="600" y2="500" class = "auxiliar" />
+	<line x1="000" y1="510" x2="600" y2="510" class = "auxiliar" />
+	<line x1="000" y1="520" x2="600" y2="520" class = "auxiliar" />
+	<line x1="000" y1="530" x2="600" y2="530" class = "auxiliar" />
+	<line x1="000" y1="540" x2="600" y2="540" class = "auxiliar" />
+	<line x1="000" y1="550" x2="600" y2="550" class = "auxiliar" />
+
+	<line x1="030" y1="490" x2="030" y2="550" class = "auxiliar" />
+	<line x1="040" y1="490" x2="040" y2="550" class = "auxiliar" />
+	<line x1="050" y1="490" x2="050" y2="550" class = "auxiliar" />
+	<line x1="060" y1="490" x2="060" y2="550" class = "auxiliar" />
+	<line x1="070" y1="490" x2="070" y2="550" class = "auxiliar" />
+	<line x1="080" y1="490" x2="080" y2="550" class = "auxiliar" />
+	<line x1="090" y1="490" x2="090" y2="550" class = "auxiliar" />
+	<line x1="090" y1="490" x2="090" y2="550" class = "auxiliar" />
+
+	<line x1="100" y1="490" x2="100" y2="550" class = "auxiliar" />
+	<line x1="110" y1="490" x2="110" y2="550" class = "auxiliar" />
+	<line x1="120" y1="490" x2="120" y2="550" class = "auxiliar" />
+	<line x1="130" y1="490" x2="130" y2="550" class = "auxiliar" />
+	<line x1="140" y1="490" x2="140" y2="550" class = "auxiliar" />
+	<line x1="150" y1="490" x2="150" y2="550" class = "auxiliar" />
+	<line x1="160" y1="490" x2="160" y2="550" class = "auxiliar" />
+	<line x1="170" y1="490" x2="170" y2="550" class = "auxiliar" />
+	<line x1="180" y1="490" x2="180" y2="550" class = "auxiliar" />
+	<line x1="190" y1="490" x2="190" y2="550" class = "auxiliar" />
+	<line x1="190" y1="490" x2="190" y2="550" class = "auxiliar" />
+
+ -->
+	<!-- y ahora el tablero -->
+
+	<!-- vertices x += 620 -->
+	<circle id="circ00" cx="0720" cy="100" r="30" class = "trazo" />
+	<circle id="circ01" cx="0870" cy="100" r="30" class = "trazo" />
+	<circle id="circ02" cx="1020" cy="100" r="30" class = "trazo" />
+
+	<circle id="circ10" cx="0720" cy="250" r="30" class = "trazo" />
+	<circle id="circ11" cx="0870" cy="250" r="30" class = "trazo" />
+	<circle id="circ12" cx="1020" cy="250" r="30" class = "trazo" />
+
+	<circle id="circ20" cx="0720" cy="400" r="30" class = "trazo" />
+	<circle id="circ21" cx="0870" cy="400" r="30" class = "trazo" />
+	<circle id="circ22" cx="1020" cy="400" r="30" class = "trazo" />
+
+	<!-- lineas que unen vertices (lados) -->
+	<!-- horizontales -->
+	<line x1="750" y1="100" x2="0840" y2="100" class = "trazo" />
+	<line x1="900" y1="100" x2="0990" y2="100" class = "trazo" />
+	<line x1="750" y1="250" x2="0840" y2="250" class = "trazo" />
+	<line x1="900" y1="250" x2="0990" y2="250" class = "trazo" />
+	<line x1="750" y1="400" x2="0840" y2="400" class = "trazo" />
+	<line x1="900" y1="400" x2="0990" y2="400" class = "trazo" />
+
+	<!-- verticales -->
+	<line x1="0720" y1="130" x2="0720" y2="220" class = "trazo" />
+	<line x1="0870" y1="130" x2="0870" y2="220" class = "trazo" />
+	<line x1="1020" y1="130" x2="1020" y2="220" class = "trazo" />
+
+	<line x1="0720" y1="280" x2="0720" y2="370" class = "trazo" />
+	<line x1="0870" y1="280" x2="0870" y2="370" class = "trazo" />
+	<line x1="1020" y1="280" x2="1020" y2="370" class = "trazo" />
+
+	<!-- diagonales -->
+	<line x1="741" y1="121" x2="849" y2="229" class = "trazo" />
+	<line x1="891" y1="271" x2="999" y2="379" class = "trazo" />
+
+	<!-- agrego botones sin texto para movimientos -->
+
+	<!-- <rect x="40" y="560" rx="24" ry="24" width="96" height="48" style="fill:#990;stroke:black;stroke-width:0;opacity:0.95" />  -->
+	<rect x="40" y="560" rx="24" ry="24" width="96" height="48" class = "over" /> 
+	<polygon points="66,582 102,566 102,602" style="fill:#eea;stroke:#880;stroke-width:1;opacity:1" />
+
+	<rect x="140" y="560" rx="24" ry="24" width="96" height="48" class = "up" /> 
+	<polygon points="166,582 202,566 202,602" style="fill:#eea;stroke:#880;stroke-width:1;opacity:1" />
+
+	<rect x="240" y="560" rx="24" ry="24" width="96" height="48" class = "down" /> 
+	<polygon points="266,582 302,566 302,602" style="fill:#eea;stroke:#880;stroke-width:1;opacity:1" />
+
+
+	<!-- solo para pruebas -->
+
+</svg>

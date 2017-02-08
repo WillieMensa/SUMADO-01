@@ -1,0 +1,172 @@
+{"frames": {
+
+"sumado-tablero.png":
+{
+	"frame": {"x":0,"y":318,"w":335,"h":335},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":335,"h":335},
+	"sourceSize": {"w":335,"h":335}
+},
+"sumadotileset-c_01.png":
+{
+	"frame": {"x":294,"y":0,"w":37,"h":48},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":37,"h":48},
+	"sourceSize": {"w":37,"h":48}
+},
+"sumadotileset-c_02.png":
+{
+	"frame": {"x":0,"y":0,"w":29,"h":46},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":29,"h":46},
+	"sourceSize": {"w":29,"h":46}
+},
+"sumadotileset-c_04.png":
+{
+	"frame": {"x":123,"y":0,"w":32,"h":47},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":32,"h":47},
+	"sourceSize": {"w":32,"h":47}
+},
+"sumadotileset-c_06.png":
+{
+	"frame": {"x":59,"y":0,"w":32,"h":48},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":32,"h":48},
+	"sourceSize": {"w":32,"h":48}
+},
+"sumadotileset-c_08.png":
+{
+	"frame": {"x":258,"y":0,"w":36,"h":47},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":36,"h":47},
+	"sourceSize": {"w":36,"h":47}
+},
+"sumadotileset-c_11.png":
+{
+	"frame": {"x":29,"y":0,"w":30,"h":48},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":30,"h":48},
+	"sourceSize": {"w":30,"h":48}
+},
+"sumadotileset-c_14.png":
+{
+	"frame": {"x":187,"y":0,"w":35,"h":48},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":35,"h":48},
+	"sourceSize": {"w":35,"h":48}
+},
+"sumadotileset-c_16.png":
+{
+	"frame": {"x":91,"y":0,"w":32,"h":44},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":32,"h":44},
+	"sourceSize": {"w":32,"h":44}
+},
+"sumadotileset-c_17.png":
+{
+	"frame": {"x":155,"y":0,"w":32,"h":47},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":32,"h":47},
+	"sourceSize": {"w":32,"h":47}
+},
+"sumadotileset-c_19.png":
+{
+	"frame": {"x":222,"y":0,"w":36,"h":47},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":36,"h":47},
+	"sourceSize": {"w":36,"h":47}
+},
+"sumadotileset-c_126.png":
+{
+	"frame": {"x":0,"y":156,"w":204,"h":54},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":204,"h":54},
+	"sourceSize": {"w":204,"h":54}
+},
+"sumadotileset-c_127.png":
+{
+	"frame": {"x":0,"y":210,"w":204,"h":54},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":204,"h":54},
+	"sourceSize": {"w":204,"h":54}
+},
+"sumadotileset-c_128.png":
+{
+	"frame": {"x":204,"y":210,"w":204,"h":54},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":204,"h":54},
+	"sourceSize": {"w":204,"h":54}
+},
+"sumadotileset-c_129.png":
+{
+	"frame": {"x":204,"y":102,"w":204,"h":54},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":204,"h":54},
+	"sourceSize": {"w":204,"h":54}
+},
+"sumadotileset-c_130.png":
+{
+	"frame": {"x":0,"y":264,"w":204,"h":54},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":204,"h":54},
+	"sourceSize": {"w":204,"h":54}
+},
+"sumadotileset-c_131.png":
+{
+	"frame": {"x":204,"y":156,"w":204,"h":54},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":204,"h":54},
+	"sourceSize": {"w":204,"h":54}
+},
+"sumadotileset-c_132.png":
+{
+	"frame": {"x":0,"y":102,"w":204,"h":54},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":204,"h":54},
+	"sourceSize": {"w":204,"h":54}
+},
+"sumadotileset-c_133.png":
+{
+	"frame": {"x":0,"y":48,"w":204,"h":54},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":204,"h":54},
+	"sourceSize": {"w":204,"h":54}
+},
+"sumadotileset-c_134.png":
+{
+	"frame": {"x":204,"y":48,"w":204,"h":54},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":204,"h":54},
+	"sourceSize": {"w":204,"h":54}
+}},
+"meta": {
+	"app": "http://www.codeandweb.com/texturepacker",
+	"version": "1.0",
+	"image": "sumadotileset-d.png",
+	"format": "RGBA8888",
+	"size": {"w":408,"h":653},
+	"scale": "1",
+	"smartupdate": "$TexturePacker:SmartUpdate:0a05d58556b2b2de5e0b05698a6fc72d:87a006ea36f3850e3fc074185b9f9b0e:23fac9e3eb1e8e80790ec4ffab556cbd$"
+}
+}

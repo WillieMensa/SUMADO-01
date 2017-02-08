@@ -1,0 +1,20 @@
+{"frames": {
+
+"sumadotileset.png":
+{
+	"frame": {"x":0,"y":0,"w":663,"h":693},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":663,"h":693},
+	"sourceSize": {"w":663,"h":693}
+}},
+"meta": {
+	"app": "http://www.codeandweb.com/texturepacker",
+	"version": "1.0",
+	"image": "sumadotileset-b.png",
+	"format": "RGBA8888",
+	"size": {"w":663,"h":693},
+	"scale": "1",
+	"smartupdate": "$TexturePacker:SmartUpdate:d5df24668d56599d023fcde785fd0db2:cc5fa7a133286fc0417195e67c957501:e634a0f67966927b9b28f8409f22e77f$"
+}
+}

@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="en">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="Generator" content="EditPlus®">
+  <meta name="Author" content="">
+  <meta name="Keywords" content="">
+  <meta name="Description" content="">
+  <title>Document</title>
+ </head>
+ <body>
+  
+  <script>
+
+	var aVertices = [],		//	array con datos de vertices
+		aTemp = undefined,
+		n = undefined,
+		DEBUG = true;
+
+	//	vector con datos para vertices
+	//	[ valor vertice, nro aleatorio ] 
+  	var aVertex = [];
+	for ( i = 0; i < 9; i++)
+	{
+		n = Math.floor(	Math.random() * 10000 );
+		aTemp = [i + 1, n ];
+		//	aVertex.push( [i + 1, n ] );
+		aVertex.push( [i + 1, Math.random() ] );
+		//	aVertex.push( [i + 1][ Math.random() ] );
+	}
+
+	aVertex = bubbleSort(aVertex, 0, aVertex.length - 1);
+
+	console.log( "---------despues del ordenamiento-----------" );
+	if (DEBUG) 
+	{
+		//	muestro los datos despues del ordenamiento
+		for (i = 0; i < 9 ; i++ )
+		{
+			console.log( "elemento " + i + " : " + aVertex[ i][0 ] + " , " + aVertex[i][1] );
+			//	console.log( "elemento " + i + " : " + aVertex[ i] + " | "  );
+		}
+	}
+
+	////////////////////////////////////////////////////
+	//	Preparo un vector con la data de los vértices:
+	//		id del vértice (codificado adecuadamente para identificarlo facil)
+	//		valor objetivo
+	//		id.num colocado: codigo del número colocado en el vértice o señal de estar vacio
+	//		indicador de vértice-dato (fijo)
+	//	[1, 6, 9, 8, 7, 4, 5, 2, 3]
+	for ( i = 0; i < 9; i++)
+	{
+		aVertices[i] = [i, aVertex[i][0], "", false]
+	}
+
+
+	//The `randomInt` helper function
+	//	console.log( randomInt(1, 9) );
+	//	console.log( randomInt(0, 20) );
+	//	console.log( randomInt(5, 10) );
+
+
+
+
+	function doSort(form) {
+		nanExists = false;
+		inputString = form.numbers.value;
+		inputNumbers = inputString.split(",");
+
+		console.log("inputString : " + inputString);
+		console.log("inputNumbers : " + inputNumbers);
+
+		for (var i = 0; i < inputNumbers.length; i++) {
+			inputNumbers[i] = parseInt(inputNumbers[i], 10);
+
+			//	console.log("inputNumbers[i] " + i + " : " + inputNumbers[i]);
+
+			if (isNaN(inputNumbers[i])) {
+				nanExists = true;
+				break;
+			}
+		}
+
+		inputNumbers = bubbleSort(inputNumbers, 0, inputNumbers.length - 1);
+		if (nanExists) 
+			form.answers.value = "Invalid Input, numbers must be seperated by commas";
+		else
+			form.answers.value = resultString(inputNumbers, 0);
+	}
+
+	function resultString(inputArray, num) {
+		if ((inputArray.length  - 1) >= num) 
+			return (inputArray[num] + "," + resultString(inputArray,(num + 1)));
+		else return "";
+	}
+
+	function bubbleSort(inputArray, start, rest) {
+		for (var i = rest - 1; i >= start;  i--) {
+			for (var j = start; j <= i; j++) {
+				if (inputArray[j+1][1] < inputArray[j][1] ) {
+					var tempValue = inputArray[j];
+					inputArray[j] = inputArray[j+1];
+					inputArray[j+1] = tempValue;
+				}
+			}
+		}
+		return inputArray;
+	}
+	//  End -->
+
+
+  </script>
+
+ </body>
+</html>
+
+
+

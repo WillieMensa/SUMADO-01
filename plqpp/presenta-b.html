@@ -1,0 +1,164 @@
+<!doctype html>
+<!-- presenta-b.html 
+	presentacion utilizando libreria tink (por los botones
+-->
+<html>
+<head>
+	<meta charset="utf-8">
+<!-- 
+	<link href='http://fonts.googleapis.com/css?family=Dosis' rel='stylesheet' type='text/css'>
+	<link href="https://fonts.googleapis.com/css?family=Amatic+SC:700" rel="stylesheet">
+ -->
+
+<link href="https://fonts.googleapis.com/css?family=Amatica+SC:700|Bangers|Bungee|Bungee+Inline|Dosis|Sigmar+One" rel="stylesheet">
+
+<!-- 
+Use the following CSS rules to specify these families:
+font-family: 'Bangers', cursive;
+font-family: 'Sigmar One', cursive;
+font-family: 'Bungee Inline', cursive;
+font-family: 'Bungee', cursive;
+font-family: 'Amatica SC', cursive;
+
+
+Specify in CSS
+Use the following CSS rules to specify these families:
+font-family: 'Amatic SC', cursive;
+For examples of how fonts can be added to webpages, see the getting started guide.
+
+ -->
+	<title>PRESENTACION DE APLICACION</title>
+
+	<style>* {padding: 0; margin: 0}
+
+	/* latin */
+	@font-face {
+	  font-family: 'Sigmar One';
+	  font-style: normal;
+	  font-weight: 400;
+	  src: local('Sigmar One Regular'), local('SigmarOne-Regular'), url(https://fonts.gstatic.com/s/sigmarone/v7/aRAZJs6CY7SV6eSg6Wx4j_k_vArhqVIZ0nv9q090hN8.woff2) format('woff2');
+	  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2212, U+2215;
+	}
+
+	/* latin */
+	@font-face {
+	  font-family: 'Bangers';
+	  font-style: normal;
+	  font-weight: 400;
+	  src: local('Bangers Regular'), local('Bangers-Regular'), url(https://fonts.gstatic.com/s/bangers/v9/yJQgrSMUoqRj-0SbnQsv4g.woff2) format('woff2');
+	  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2212, U+2215;
+	}
+
+/* 
+	@font-face {
+		font-family: "Bangers";
+		src: url("https://fonts.googleapis.com/css?family=Bangers");
+	}
+*/
+
+	body {
+	  <!-- background: #123; -->
+	  color: #111;
+	  font-family: 'Bangers', cursive;
+	  font-size: 5.00em;
+	  height: auto;
+	  padding-bottom: 20px;
+	}
+
+	.amatic {
+	  font-family: 'Amatic SC', cursive;
+	}
+	.amatica {
+	  font-family: 'Amatica SC', cursive;
+	}
+	.bangers {
+		font-family: 'Bangers', cursive;
+	}
+	.sigmar {
+		font-family: 'Sigmar One', cursive;
+	}
+	.bungeeinline {
+		font-family: 'Bungee Inline', cursive;
+	}
+	.bungee {
+		font-family: 'Bungee', cursive;
+	}
+
+	button
+	{
+		font-family: Bangers;
+		font-size: 14px;
+		color: #fff;
+		padding: 10px 20px;
+		border: 2px solid #000;
+		cursor: pointer;
+		
+		-webkit-border-radius: 10px;
+		-moz-border-radius: 10px;
+		border-radius: 10px;	
+		
+		background:-webkit-linear-gradient(top, #a3a3a3, #000);
+		background:-moz-linear-gradient(top, #a3a3a3, #000);
+		background: linear-gradient(top, #a3a3a3, #000);
+		
+		-webkit-box-shadow: 5px 5px 3px rgba(0,0,0,0.5);
+		-moz-box-shadow: 5px 5px 3px rgba(0,0,0,0.5);
+		box-shadow: 5px 5px 3px rgba(0,0,0,0.5);
+		
+		-webkit-user-select: none;
+	  -moz-user-select: none;
+	  user-select: none;
+	}
+
+	button:hover
+	{
+	  background: -webkit-linear-gradient(top, #663300, #ffffff);
+	  background: -moz-linear-gradient(top, #663300, #ffffff);
+	  background: linear-gradient(top, #663300, #ffffff);
+	}
+
+	button:active
+	{
+	  background: -webkit-linear-gradient(top, #858565, #c5c9a9);
+	  background: -moz-linear-gradient(top, #858565, #c5c9a9);
+	  background: linear-gradient(top, #858565, #c5c9a9);
+	}
+
+
+	</style>
+
+</head>
+
+<body>
+
+	<!-- 
+	<p>probando
+	<p class="sigmar" > Prueba con Sigmar One
+	 -->
+
+	<script src="../pixi.js/bin/pixi.js"></script>
+
+	<script src="../library/tink/bin/tink.js"></script>
+
+<!-- 
+	<p class='amatic'>texto de prueba con Amatic</p>
+	<p class='amatica'>texto de prueba con Amatica SC</p>
+	<p class='bangers'>texto de prueba con Bangers</p>
+	<p class='sigmar'>texto de prueba con Sigmar</p>
+	<p class='bungeeinline'>texto de prueba con Bungee inline</p>
+	<p class='bungee'>texto de prueba con Bungee</p>
+	<p>
+		<button onclick="myFunction()">jugar        </button>
+		<button onclick="myFunction()">como se juega</button>
+		<button onclick="myFunction()">puntaje      </button>
+	</p>
+ -->
+
+	<script src="presenta-b.js"></script>
+
+	<p class="sigmar" >probando
+
+</body>
+
+</html>
+

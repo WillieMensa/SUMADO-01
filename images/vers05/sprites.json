@@ -1,0 +1,32 @@
+<TextureAtlas imagePath="sprites.png">
+	<SubTexture name="botonayudadown.png" x="574" y="112" width="204" height="54"/>
+	<SubTexture name="botonayudaover.png" x="368" y="88" width="204" height="54"/>
+	<SubTexture name="botonayudaup.png" x="407" y="0" width="204" height="54"/>
+	<SubTexture name="botoniniciodown.png" x="574" y="168" width="204" height="54"/>
+	<SubTexture name="botoninicioover.png" x="368" y="200" width="204" height="54"/>
+	<SubTexture name="botoninicioup.png" x="368" y="256" width="204" height="54"/>
+	<SubTexture name="botonjugardown.png" x="368" y="312" width="204" height="54"/>
+	<SubTexture name="botonjugarover.png" x="368" y="368" width="204" height="54"/>
+	<SubTexture name="botonjugarup.png" x="412" y="424" width="204" height="54"/>
+	<SubTexture name="botonpuntajedown.png" x="574" y="224" width="204" height="54"/>
+	<SubTexture name="botonpuntajeover.png" x="574" y="56" width="204" height="54"/>
+	<SubTexture name="botonpuntajeup.png" x="574" y="336" width="204" height="54"/>
+	<SubTexture name="botonsalirdown.png" x="574" y="280" width="204" height="54"/>
+	<SubTexture name="botonsalirover.png" x="206" y="456" width="204" height="54"/>
+	<SubTexture name="botonsalirup.png" x="368" y="144" width="204" height="54"/>
+	<SubTexture name="botonvolverdown.png" x="0" y="456" width="204" height="54"/>
+	<SubTexture name="botonvolverover.png" x="613" y="0" width="204" height="54"/>
+	<SubTexture name="botonvolverup.png" x="618" y="392" width="204" height="54"/>
+	<SubTexture name="num00.png" x="758" y="448" width="30" height="44"/>
+	<SubTexture name="num01.png" x="780" y="242" width="21" height="44"/>
+	<SubTexture name="num02.png" x="655" y="448" width="34" height="43"/>
+	<SubTexture name="num03.png" x="691" y="448" width="32" height="45"/>
+	<SubTexture name="num04.png" x="780" y="102" width="30" height="44"/>
+	<SubTexture name="num05.png" x="780" y="56" width="30" height="44"/>
+	<SubTexture name="num06.png" x="725" y="448" width="31" height="44"/>
+	<SubTexture name="num07.png" x="780" y="195" width="28" height="45"/>
+	<SubTexture name="num08.png" x="618" y="448" width="35" height="45"/>
+	<SubTexture name="num09.png" x="780" y="148" width="30" height="45"/>
+	<SubTexture name="su-ma-do.png" x="0" y="0" width="405" height="86"/>
+	<SubTexture name="sumado-tablero.png" x="0" y="88" width="366" height="366"/>
+</TextureAtlas>

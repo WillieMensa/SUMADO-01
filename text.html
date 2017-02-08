@@ -1,0 +1,101 @@
+<!doctype html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>TEXT</title>
+
+	<link href="https://fonts.googleapis.com/css?family=Luckiest+Guy|Sriracha" rel="stylesheet">
+	
+	<style>* {padding: 0; margin: 0}</style>
+
+</head>
+
+<body>
+
+<!-- 
+	<script src="../pixi.js/bin/pixi.min.js"></script>
+	<script src="../pixi.js/bin/tink.js"></script>
+	<script src="../PIXI.draggable-master/bin/pixi.draggable.js"></script>
+	
+	ver ejemplos de tratamiento de piezas para un juego de slinding en sliding puzzle..js (phaser) 
+	Esquema utilizado por phaser en
+		e:\Google Drive\Web_Dev\phaser-2.6.2\resources\Project Templates\Basic\
+
+-->
+
+	<script src="http://pixijs.download/release/pixi.min.js"></script>
+
+	<!-- <script src="text.js"> -->
+	<script>
+
+/*
+	text.js
+	ejemplo de presentación de textos con pixi
+
+*/
+
+	var app = new PIXI.Application(800, 600, {backgroundColor: 0x1099bb});
+	document.body.appendChild(app.view);
+
+/*
+	font-family: 'Luckiest Guy', cursive;
+	font-family: 'Pacifico', cursive;
+	font-family: 'Patrick Hand', cursive;
+	font-family: 'Shadows Into Light Two', cursive;
+	font-family: 'Sriracha', cursive;
+*/
+
+	var style1 = new PIXI.TextStyle({
+		fontFamily: 'Sriracha',
+		fontSize: 24,
+		fontStyle: 'italic',
+		fontWeight: 'bold',
+		fill: ['#ffffff', '#00ff99'], // gradient
+		stroke: '#4a1850',
+		strokeThickness: 0,
+		dropShadow: true,
+		dropShadowColor: '#000000',
+		dropShadowBlur: 14,
+		dropShadowAngle: Math.PI / 6,
+		dropShadowDistance: 6,
+		wordWrap: true,
+		wordWrapWidth: 440
+	});
+
+	var basicText = new PIXI.Text('Basic text in pixi', style1 );
+	basicText.x = 30;
+	basicText.y = 90;
+
+	app.stage.addChild(basicText);
+
+	var style = new PIXI.TextStyle({
+		fontFamily: 'Luckiest Guy',
+		fontSize: 36,
+		fontStyle: 'italic',
+		fontWeight: 'bold',
+		fill: ['#ffffff', '#00ff99'], // gradient
+		stroke: '#4a1850',
+		strokeThickness: 5,
+		dropShadow: true,
+		dropShadowColor: '#000000',
+		dropShadowBlur: 4,
+		dropShadowAngle: Math.PI / 6,
+		dropShadowDistance: 6,
+		wordWrap: true,
+		wordWrapWidth: 440
+	});
+
+	var richText = new PIXI.Text('Rich text with a lot of options and across multiple lines', style);
+	richText.x = 30;
+	richText.y = 180;
+
+	app.stage.addChild(richText);
+
+	
+	</script>
+
+
+</body>
+
+</html>
+

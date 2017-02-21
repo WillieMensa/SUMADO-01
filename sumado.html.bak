@@ -20,17 +20,21 @@
 
 	<title> SU-MA-DO </title>
 
-    <!-- Remove spacing around page contents, i.e., the game, and make
+	//	<link href="https://fonts.googleapis.com/css?family=Luckiest+Guy|Sriracha|Delius" rel="stylesheet">
+
+
+	<!-- Remove spacing around page contents, i.e., the game, and make
          the background pink and canvas black for debugging purposes -->
     <style>
       body {
         margin: 0; padding: 0;
         overflow: hidden;
-        background-color: #cba;
+        background-color: #888;
       }
 
       canvas { background-color: #222222; }
 
+		@import url('https://fonts.googleapis.com/css?family=Delius');
 		@import url('https://fonts.googleapis.com/css?family=Sriracha');
 		@import url('https://fonts.googleapis.com/css?family=Luckiest+Guy');
 
@@ -49,11 +53,13 @@
 
 	<!-- <script src="../pixi.js/bin/pixi.js"></script> -->
 	<!-- <script src="../../Web_Dev/Librerias/pixi.js-master/scripts/pixi.js"></script> -->
+	<!-- <script src="http://pixijs.download/release/pixi.min.js"></script> -->
 
-	<script src="http://pixijs.download/release/pixi.min.js"></script>
+	<script src="../pixijs434/pixi.js"></script>
 
+<!-- 
 	<script src="../library/tink/bin/tink.js"></script>
-
+ -->
 	<script src="sumado.js"></script>
 
 </body>

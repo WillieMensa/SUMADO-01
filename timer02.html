@@ -1,0 +1,25 @@
+<!doctype html>
+<html>
+    <head>
+        <title>Pixi.js — A 2D JavaScript Renderer</title>
+    </head>
+    <body>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/pixi.js/3.0.8/pixi.js"></script>
+
+        <script>
+            <!-- location.href = 'http://pixijs.download/release/docs/index.html'; -->
+			var lastUpdate = Date.now();
+			var myInterval = setInterval(tick, 0);
+
+			function tick() {
+				var now = Date.now();
+				var dt = now - lastUpdate;
+				lastUpdate = now;
+
+				update(dt);
+				render(dt);
+			}
+		</script>
+
+    </body>
+</html>

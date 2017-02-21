@@ -2,7 +2,7 @@
 
 "botonatrasdown.png":
 {
-	"frame": {"x":0,"y":0,"w":96,"h":48},
+	"frame": {"x":800,"y":48,"w":96,"h":48},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":96,"h":48},
@@ -10,7 +10,7 @@
 },
 "botonatrasover.png":
 {
-	"frame": {"x":96,"y":0,"w":96,"h":48},
+	"frame": {"x":896,"y":48,"w":96,"h":48},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":96,"h":48},
@@ -18,7 +18,7 @@
 },
 "botonatrasup.png":
 {
-	"frame": {"x":192,"y":0,"w":96,"h":48},
+	"frame": {"x":0,"y":96,"w":96,"h":48},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":96,"h":48},
@@ -26,7 +26,7 @@
 },
 "botonayudadown.png":
 {
-	"frame": {"x":288,"y":0,"w":200,"h":48},
+	"frame": {"x":496,"y":96,"w":200,"h":48},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":200,"h":48},
@@ -34,7 +34,7 @@
 },
 "botonayudaover.png":
 {
-	"frame": {"x":488,"y":0,"w":200,"h":48},
+	"frame": {"x":696,"y":96,"w":200,"h":48},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":200,"h":48},
@@ -42,7 +42,7 @@
 },
 "botonayudaup.png":
 {
-	"frame": {"x":688,"y":0,"w":200,"h":48},
+	"frame": {"x":296,"y":96,"w":200,"h":48},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":200,"h":48},
@@ -50,7 +50,7 @@
 },
 "botonjugardown.png":
 {
-	"frame": {"x":0,"y":48,"w":200,"h":48},
+	"frame": {"x":96,"y":96,"w":200,"h":48},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":200,"h":48},
@@ -58,7 +58,7 @@
 },
 "botonjugarover.png":
 {
-	"frame": {"x":200,"y":48,"w":200,"h":48},
+	"frame": {"x":400,"y":0,"w":200,"h":48},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":200,"h":48},
@@ -66,7 +66,7 @@
 },
 "botonjugarup.png":
 {
-	"frame": {"x":400,"y":48,"w":200,"h":48},
+	"frame": {"x":0,"y":0,"w":200,"h":48},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":200,"h":48},
@@ -74,7 +74,7 @@
 },
 "botonpuntajedown.png":
 {
-	"frame": {"x":600,"y":48,"w":200,"h":48},
+	"frame": {"x":200,"y":0,"w":200,"h":48},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":200,"h":48},
@@ -82,7 +82,7 @@
 },
 "botonpuntajeover.png":
 {
-	"frame": {"x":0,"y":96,"w":200,"h":48},
+	"frame": {"x":600,"y":0,"w":200,"h":48},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":200,"h":48},
@@ -90,7 +90,7 @@
 },
 "botonpuntajeup.png":
 {
-	"frame": {"x":200,"y":96,"w":200,"h":48},
+	"frame": {"x":400,"y":48,"w":200,"h":48},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":200,"h":48},
@@ -98,7 +98,7 @@
 },
 "botonsalirdown.png":
 {
-	"frame": {"x":400,"y":96,"w":200,"h":48},
+	"frame": {"x":0,"y":48,"w":200,"h":48},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":200,"h":48},
@@ -106,7 +106,7 @@
 },
 "botonsalirover.png":
 {
-	"frame": {"x":600,"y":96,"w":200,"h":48},
+	"frame": {"x":200,"y":48,"w":200,"h":48},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":200,"h":48},
@@ -114,15 +114,23 @@
 },
 "botonsalirup.png":
 {
-	"frame": {"x":0,"y":144,"w":200,"h":48},
+	"frame": {"x":600,"y":48,"w":200,"h":48},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":200,"h":48},
 	"sourceSize": {"w":200,"h":48}
 },
+"botonsobreup.png":
+{
+	"frame": {"x":0,"y":144,"w":203,"h":51},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":203,"h":51},
+	"sourceSize": {"w":203,"h":51}
+},
 "num00.png":
 {
-	"frame": {"x":200,"y":144,"w":68,"h":68},
+	"frame": {"x":543,"y":144,"w":68,"h":68},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":68,"h":68},
@@ -130,7 +138,7 @@
 },
 "num01.png":
 {
-	"frame": {"x":268,"y":144,"w":68,"h":68},
+	"frame": {"x":679,"y":144,"w":68,"h":68},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":68,"h":68},
@@ -138,7 +146,7 @@
 },
 "num02.png":
 {
-	"frame": {"x":336,"y":144,"w":68,"h":68},
+	"frame": {"x":611,"y":144,"w":68,"h":68},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":68,"h":68},
@@ -146,7 +154,7 @@
 },
 "num03.png":
 {
-	"frame": {"x":404,"y":144,"w":68,"h":68},
+	"frame": {"x":747,"y":144,"w":68,"h":68},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":68,"h":68},
@@ -154,7 +162,7 @@
 },
 "num04.png":
 {
-	"frame": {"x":472,"y":144,"w":68,"h":68},
+	"frame": {"x":815,"y":144,"w":68,"h":68},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":68,"h":68},
@@ -162,7 +170,7 @@
 },
 "num05.png":
 {
-	"frame": {"x":540,"y":144,"w":68,"h":68},
+	"frame": {"x":475,"y":144,"w":68,"h":68},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":68,"h":68},
@@ -170,7 +178,7 @@
 },
 "num06.png":
 {
-	"frame": {"x":608,"y":144,"w":68,"h":68},
+	"frame": {"x":407,"y":144,"w":68,"h":68},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":68,"h":68},
@@ -178,7 +186,7 @@
 },
 "num07.png":
 {
-	"frame": {"x":676,"y":144,"w":68,"h":68},
+	"frame": {"x":203,"y":144,"w":68,"h":68},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":68,"h":68},
@@ -186,7 +194,7 @@
 },
 "num08.png":
 {
-	"frame": {"x":744,"y":144,"w":68,"h":68},
+	"frame": {"x":271,"y":144,"w":68,"h":68},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":68,"h":68},
@@ -194,7 +202,7 @@
 },
 "num09.png":
 {
-	"frame": {"x":812,"y":144,"w":68,"h":68},
+	"frame": {"x":339,"y":144,"w":68,"h":68},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":68,"h":68},
@@ -221,8 +229,8 @@
 	"version": "1.0",
 	"image": "sumadotileset.png",
 	"format": "RGBA8888",
-	"size": {"w":888,"h":580},
+	"size": {"w":992,"h":580},
 	"scale": "1",
-	"smartupdate": "$TexturePacker:SmartUpdate:8769da9d95a39bfd3c3d45b6d55147d7:bb045f669fccdb5d94669ba7193b6996:841807efdc91bb1daea4707f5ad87600$"
+	"smartupdate": "$TexturePacker:SmartUpdate:3911ae54c58bb2a46045a2da155c527e:8c45bb17cdd4a8651e13e13036993c9e:841807efdc91bb1daea4707f5ad87600$"
 }
 }

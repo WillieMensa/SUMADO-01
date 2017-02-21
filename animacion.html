@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Pixi.js tutorial - Basic Example</title>
+    <style>
+        body {
+            margin: 50;
+            padding: 50;
+            background-color: #888;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Include pixi.js 4.0.0 -->
+    <!-- <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pixi.js/4.0.0/pixi.min.js"></script> -->
+
+	<script src="http://pixijs.download/release/pixi.min.js"></script>
+
+    <script>
+
+		//	var app = new PIXI.Application(800, 600, { antialias: true });
+		var app = new PIXI.Application(800, 600 );	//	, { antialias: true });
+		document.body.appendChild(app.view);
+
+		app.stage.interactive = true;
+
+		//	var graphics = new PIXI.Graphics();
+
+		// set a fill and line style again
+		//	graphics.lineStyle(10, 0xFF0000, 0.8);
+		//	graphics.beginFill(0xFF700B, 1);
+
+
+		// let's create a moving shape
+		var thing = new PIXI.Graphics();
+		app.stage.addChild(thing);
+		thing.x = 800/2;
+		thing.y = 600/2;
+
+		var count = 0;
+
+		app.ticker.add(function() {
+
+			count += 0.01;
+
+			thing.clear();
+			thing.lineStyle(10, 0xff0000, 1);
+			thing.beginFill(0xffFF00, 0.5);
+
+			thing.moveTo(-120 + Math.sin(count) * 20, -100 + Math.cos(count)* 20);
+			thing.lineTo( 120 + Math.cos(count) * 20, -100 + Math.sin(count)* 20);
+			thing.lineTo( 120 + Math.sin(count) * 20, 100 + Math.cos(count)* 20);
+			thing.lineTo( -120 + Math.cos(count)* 20, 100 + Math.sin(count)* 20);
+			thing.lineTo( -120 + Math.sin(count) * 20, -100 + Math.cos(count)* 20);
+
+			//	thing.rotation = count * 0.1;
+			thing.scale.set(1 + Math.sin(count) * 0.5);
+		});
+
+    </script>
+</body>
+
+</html>

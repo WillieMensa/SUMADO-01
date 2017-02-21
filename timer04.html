@@ -1,0 +1,66 @@
+<!doctype html>
+<html>
+<head>
+	<title>Pixi.js — A 2D JavaScript Renderer</title>
+</head>
+<body>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pixi.js/3.0.8/pixi.js"></script>
+
+<script>
+	var renderer = new PIXI.autoDetectRenderer(800,400);
+	document.body.appendChild(renderer.view);
+
+	var stage = new PIXI.Container();
+	var start = new Date().getTime();
+	var ahora = new Date();
+	var elapsed = new Date().getTime() - start;
+	var	tiempo	= ahora.getTime()
+
+	
+	function animate(){
+		window.requestAnimationFrame(animate);
+		display_ct ()
+		renderer.render(stage);
+	}
+	animate();
+
+	/*
+	document.getElementById('ct').innerHTML = start;
+	document.getElementById('crono').innerHTML = elapsed;
+	document.getElementById('hoy').innerHTML = lastUpdate;
+	*/
+
+	function Cronometro () {
+		start = new Date().getTime();
+	}
+
+	function display_ct () {
+
+		elapsed = ( new Date().getTime() - start ) / 1000;
+
+		document.getElementById('ct').innerHTML = start;
+		document.getElementById('crono').innerHTML = elapsed;
+		document.getElementById('hora').innerHTML = new Date().getTime() ;
+
+		/*
+		console.log( "start : " + start );
+		console.log( "elapsed: " + elapsed );
+		console.log( "lastUpdate:" + lastUpdate );
+		*/
+
+	}
+
+
+	</script>
+
+
+	<input type="button" value="Inicia crono" onclick="Cronometro();"/> | <input type="button" value="Fin crono" onclick="stop();"/>
+
+	<p>Inicio: <span id='ct' style="background-color: #FFFF00">"start"</span></p>
+	<p>Transcurrido:<span id='crono' style="background-color: #00ffff"></span></p>
+	<p>Hora : <span id='hora' style="background-color: #00ffff"></span></p>
+
+
+    </body>
+
+</html>

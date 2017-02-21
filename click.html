@@ -1,0 +1,91 @@
+<!doctype html>
+<!--
+	menu.html 
+	manejo del menu
+
+	Optimizaciones 
+	Botones de 
+		file:///E:/Google%20Drive/Web_Dev/cc-3digital-css3-buttons/Main%20Files/index.html
+
+-->
+<html>
+<head>
+  <head>
+    <meta charset="UTF-8">
+
+    <!-- Viewport meta tag is critical to have mobile browsers
+         actually report correct screen dimensions -->
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1, user-scalable=no" />
+
+	<title> CLICK </title>
+
+	<link href="https://fonts.googleapis.com/css?family=Luckiest+Guy|Sriracha" rel="stylesheet">
+
+	<!-- Remove spacing around page contents, i.e., the game, and make
+         the background pink and canvas black for debugging purposes -->
+    <style>
+      body {
+        margin: 0; padding: 0;
+        overflow: hidden;
+        background-color: #cba;
+      }
+
+      canvas { background-color: #222222; }
+
+		@import url('https://fonts.googleapis.com/css?family=Sriracha');
+		@import url('https://fonts.googleapis.com/css?family=Luckiest+Guy');
+
+	}
+
+	</style>
+
+</head>
+
+<body>
+
+	<script src="../pixijs434/pixi.js"></script>
+
+	<script>
+		var app = new PIXI.Application(800, 600, { backgroundColor: 0x1099bb });
+		document.body.appendChild(app.view);
+
+		// Scale mode for all textures, will retain pixelation
+		PIXI.settings.SCALE_MODE = PIXI.SCALE_MODES.NEAREST;
+
+		var sprite = PIXI.Sprite.fromImage('images/mensa.png');
+
+		// Set the initial position
+		sprite.anchor.set(0.5);
+		sprite.x = app.renderer.width / 2;
+		sprite.y = app.renderer.height / 2;
+
+		// Opt-in to interactivity
+		sprite.interactive = true;
+
+		// Shows hand cursor
+		sprite.buttonMode = true;
+
+		// Pointers normalize touch and mouse
+		sprite.on('pointerdown', onClick);
+
+		// Alternatively, use the mouse & touch events:
+		// sprite.on('click', onClick); // mouse-only
+		// sprite.on('tap', onClick); // touch-only
+
+		app.stage.addChild(sprite);
+
+		function onClick () {
+			sprite.scale.x *= 1.25;
+			sprite.scale.y *= 1.25;
+		}
+	
+	</script>
+
+
+</body>
+
+</html>
+
+
+

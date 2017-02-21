@@ -27,12 +27,7 @@ var	LIMITE_TABLERO = 450,
 	LINEA_BOTONES = 470,
 	LINEA_BOTONES_OFF = 700,
 	RENDERER_W = 680,
-	RENDERER_H = 520,
-	FONDO_AYUDA = 0x008cff,			//	FONDO_AYUDA = "#690",			
-	FONDO_JUEGO = "0xffffff",		//	 "#ffc",
-	FONDO_ACERCA = "#000",
-	DEBUG = false;
-	//	DEBUG = true;
+	RENDERER_H = 520;
 
 var Container = PIXI.Container,
     autoDetectRenderer = PIXI.autoDetectRenderer,
@@ -50,56 +45,52 @@ var rendererOptions = {
 
 //Create the renderer
 //	750 de alto solo para visualizar los botones cuando son desplazados
-var renderer = autoDetectRenderer( RENDERER_W, RENDERER_H, rendererOptions );
-//	var renderer = new PIXI.Application( RENDERER_W, RENDERER_H, { backgroundColor: 0x1099bb } );
+//	var renderer = autoDetectRenderer( RENDERER_W, RENDERER_H, rendererOptions );
+var renderer = new PIXI.Application( RENDERER_W, RENDERER_H, rendererOptions );
 //	var renderer = new PIXI.Application( 700, 550, rendererOptions );
-//	var app = new PIXI.Application(800, 600, { backgroundColor: 0x1099bb });
-
-//	-----------------------------------------------
-// Put the renderer on screen in the corner
-renderer.view.style.position = "absolute";
-renderer.view.style.top = "0px";
-renderer.view.style.left = "0px";
-
-
-//	--------------------------------------------	
 
 //Add the canvas to the HTML document
 	document.body.appendChild(renderer.view);
 
 
 //	Set the canvas's border style and background color
-renderer.view.style.border = "5px solid #800";
-renderer.backgroundColor = FONDO_JUEGO;
-
+renderer.view.style.border = "5px solid #630";
+renderer.backgroundColor = "0xffffcc";
 
 //Define any variables that are used in more than one function
-var aNumeros = [],		//	array con los numeros
-	aSumaPolig  = [],	//	array con la suma de los poligonos
-	aVertices = [],		//	array con datos de vertices
-	aVPos = [ [68,68], [218,68], [368,68], [68,218], [218,218], [368,218], [68,368], [218,368], [368,368] ],	//	aVPos contiene las posición de los vértices
-	BotonAtras = undefined,
+var t = undefined,
 	BotonAyuda = undefined,
 	BotonJugar = undefined,
-	BotonSobre = undefined,
-	Crono = undefined,
-	start = undefined,
-	elapsed = undefined,
+	BotonPuntos = undefined,
+	BotonAtras = undefined,
+	MessageFin = undefined,
+	EscenaMenuInic = undefined,			//	container pantalla de inicio
+	EscenaFinJuego = undefined,			//	container aviso de fin del juego
 	EscenaDeAyudas = undefined,			//	container ayudas
 	EscenaDeJuego = undefined,			//	container juego
-	EscenaSobre = undefined,			//	container de estadisticas
-	EscenaFinJuego = undefined,			//	container aviso de fin del juego
-	EscenaMenuInic = undefined,			//	container pantalla de inicio
 	EscenarioGral = undefined,			//	container del total (1er nivel)
+	EscenaEstadist = undefined,			//	container de estadisticas
+	//	draggableObjects = undefined,
 	id = undefined,
-	MessageFin = undefined,
-	//	MessExtra = undefined,
-	numTexture = undefined,
+	message = undefined,
 	nVertice = undefined,
+	numTexture = undefined,
 	pointer = undefined,
 	state = undefined, 
+	stateMessage = undefined,
+	MessExtra = undefined,
+    //	gridstep = 200,
     gridstep = 150,
-    resuelto = false;
+    resuelto = false,
+	aSumaPolig  = [],	//	array con la suma de los poligonos
+	aNumeros = [],		//	array con los numeros
+	aVertices = [],		//	array con datos de vertices
+						//	aVPos contiene las posición de los vértices
+	//	aVPos = [ [100,100], [300,100], [500,100], [100,300], [300,300], [500,300], [100,500], [300,500], [500,500] ],
+	//	aVPos = [ [75,75], [225,75], [375,75], [75,225], [225,225], [375,225], [75,375], [225,375], [375,375] ],
+	aVPos = [ [68,68], [218,68], [368,68], [68,218], [218,218], [368,218], [68,368], [218,368], [368,368] ],
+	//	DEBUG = false;		
+	DEBUG = true;
 
 //load resources; a JSON file and run the `setup` function when it's done 
 loader.add("images/sumadotileset.json")	.load(setup);
@@ -110,8 +101,8 @@ function setup() {
 	//	Preparacion general
 	console.log("setup	            -----------------------------" );
 
-	//	Create a new instance of Tink
-	//	t = new Tink(PIXI, renderer.view);
+	//Create a new instance of Tink
+	t = new Tink(PIXI, renderer.view);
 
 	//	Create an alias for the texture atlas frame ids
 	//	Hay varias formas de crear sprites a partir del atlas. Esta sería la mas expeditiva.
@@ -121,12 +112,6 @@ function setup() {
 
 	//	Make the game scene and add it to the EscenarioGral
 	EscenarioGral = new Container();
-
-	// Size the renderer to fill the screen
-	resize(); 
-	// Listen for and adapt to changes to the screen size, e.g.,
-	// user changing the window or rotating their device
-	window.addEventListener("resize", resize);
 	
 	//	Escenario menu inicial
 	EscenaMenuInic = new Container();
@@ -145,8 +130,8 @@ function setup() {
 	EscenarioGral.addChild(EscenaDeAyudas);
 
 	//	Crear escenario de estadisticas
-	EscenaSobre = new Container();
-	EscenarioGral.addChild(EscenaSobre);
+	EscenaEstadist = new Container();
+	EscenarioGral.addChild(EscenaEstadist);
 
 	//	Prepara los botones necesarios
 	HaceBotones();
@@ -154,8 +139,9 @@ function setup() {
 	//	Prepara las diferentes pantallas / escenas.
 	PantallaInicio();
 	PantallaAyuda();
+	PantallaTutorial();
 	PantallaJugar();
-	PantallaSobre();
+	PantallaEstadistica();
 
 	//	Set the initial game state
 	//	state = play;
@@ -174,11 +160,9 @@ function setup() {
 	EscenaFinJuego.visible = false;		//	container aviso de fin del juego
 	EscenarioGral.visible = true;			//	container del juego
 	EscenaDeAyudas.visible = true;
-	EscenaSobre.visible = false;
-
+	EscenaEstadist.visible = true;
 /*
 var style = {
-	fontFamily: "Sriracha",	
     fontFamily: 'Luckiest Guy',
     fontSize: "64px",
     fontStyle: 'italic',
@@ -196,18 +180,14 @@ var style = {
     wordWrapWidth: 550
 };
 */
+	MessageFin = new Text( "Buenísimo!/nHas resuelto correctamente.", { fontFamily: 'Luckiest Guy', fontSize: "64px" } );
 
-var style = {
-    fontFamily: 'Luckiest Guy',
-	//	fontFamily: "Sriracha",	
-	fontSize: "32px", 
-	fill: "#600" } ;
+	MessageFin.position.set(100,100);
+	EscenaFinJuego.addChild(MessageFin);
 
-	//	MessageFin = new Text( "Buenísimo!/nHas resuelto correctamente.", { fontFamily: "Luckiest Guy",	fontSize: "64px", fill: "0x880000"  } );
-	MessageFin = new Text( "Solución correcta.\nFelicitaciones!", style	);	
-	//	{ fontFamily: "Delius",	fontSize: "40px", fill: "0x880000"  } );
-
-	MessageFin.position.set(100, 420 );
+	//	MessageFin = new Text( "Has resuelto correctamente.", style );
+	MessageFin = new Text( "Has resuelto correctamente.",  { fontFamily: 'Luckiest Guy', fontSize: "64px" }  );
+	MessageFin.position.set(100,250);
 	EscenaFinJuego.addChild(MessageFin);
 
 
@@ -238,43 +218,34 @@ function PantallaInicio() {
 	var spritesumado = PIXI.utils.TextureCache["su-ma-do.png"];
 	spritesumado = new PIXI.Sprite(spritesumado);
 	spritesumado.x = 96 ;
-	spritesumado.y = 80 ;
+	spritesumado.y = 150 ;
 	// make it a bit bigger, so it's easier to grab
 	spritesumado.scale.set(1.0);
 	EscenaMenuInic.addChild(spritesumado);
 
-	//	var style = new PIXI.TextStyle({
-	//		fontFamily: 'Sriracha',
-	//		fontSize: 20,
-	//		fontStyle: 'italic',
-	//		fontWeight: 'bold',
-	//		fill: ['#442244', '#00ff99'], // gradient
-	//		stroke: '#4a1850',
-	//		strokeThickness: 0,
-	//		dropShadow: true,
-	//		dropShadowColor: '#000000',
-	//		dropShadowBlur: 14,
-	//		dropShadowAngle: Math.PI / 6,
-	//		dropShadowDistance: 6,
-	//		wordWrap: true,
-	//		wordWrapWidth: 440
-	//	});
+	var style = new PIXI.TextStyle({
+		fontFamily: 'Sriracha',
+		fontSize: 20,
+		fontStyle: 'italic',
+		fontWeight: 'bold',
+		fill: ['#442244', '#00ff99'], // gradient
+		stroke: '#4a1850',
+		strokeThickness: 0,
+		dropShadow: true,
+		dropShadowColor: '#000000',
+		dropShadowBlur: 14,
+		dropShadowAngle: Math.PI / 6,
+		dropShadowDistance: 6,
+		wordWrap: true,
+		wordWrapWidth: 440
+	});
 
 	//	MessExtra = new Text( "Vamos a sumar...!", style );
-	var MessExtra = new Text( 'Vamos a sumar...!',   { fontFamily: "Sriracha", fontSize: "32px", fill:"blue"} ) ;
-	//	MessExtra.position.set(10,10);
-	var MessExtra2 = new Text( 'Vamos a sumar...!',   { fontFamily: "Luckiest Guy", fontSize: "32px", fill:"blue"} ) ;
-	//	MessExtra2.position.set(10,10);
-	if (DEBUG)
-	{
-		MessExtra.position.set(10,10);
-		MessExtra2.position.set(310,10);
-	} else { 
-		MessExtra.position.set(10, LINEA_BOTONES_OFF );
-		MessExtra2.position.set(310, LINEA_BOTONES_OFF );
-	}
+	var MessExtra = new Text( 'Vamos a sumar...!', { fontFamily: "Sriracha",	fontSize: "22px", fill: "0xffffcc" } );
+
+	//	MessExtra = new Text( "Vamos a sumar...!", {font:"20px Sriracha", fill:"#442244"} );
+	MessExtra.position.set(10,10);
 	EscenaMenuInic.addChild(MessExtra);
-	EscenaMenuInic.addChild(MessExtra2);
 
 //------------------------------------------------------------
 //	AGREGO LOGO OMENSA
@@ -283,9 +254,9 @@ function PantallaInicio() {
 		var logomensa = new PIXI.Sprite(texture);
 		logomensa.x = RENDERER_W / 2;
 		logomensa.y = RENDERER_H / 2;
-		logomensa.anchor.set(0.5);
 
 		//	container.addChild(logomensa);
+
 		//	EscenaMenuInic.stage.interactive = true;
 
 		//	var graphics = new PIXI.Graphics();
@@ -297,20 +268,20 @@ function PantallaInicio() {
 
 		// let's create a moving shape
 		EscenaMenuInic.addChild(logomensa);
+
 		var count = 0;
+
 		//	EscenaMenuInic.ticker.add(function() {
-		//	renderer.ticker.add(function() {
-		//	PIXI.ticker.add(function() {
-		PIXI.ticker.shared.add(function() {
+		renderer.ticker.add(function() {
+
 			count += 0.03;
-			//	inflar y desinflar el logo
-			logomensa.scale.set(1 + Math.cos(count) * 0.2);
-			//	oscilar horizontalmente
-			logomensa.x = RENDERER_W * ( 0.5 + Math.sin(count) * 0.3);
-			logomensa.y = RENDERER_H * ( 0.6 + Math.cos(count) * 0.1);
+
+			logomensa.scale.set(1 + Math.sin(count) * 0.2);
+
 		});
 
 //------------------------------------------------------------
+
 
 }
 
@@ -331,7 +302,7 @@ function gameLoop() {
 	//	console.log( "state en gameloop() |" + state + "|");
 
 	//Update Tink
-	//	t.update();
+	t.update();
 
 	//Render the EscenarioGral
 	renderer.render(EscenarioGral);
@@ -343,18 +314,9 @@ function gameLoop() {
 
 //	--------------------------------------
 function play() {
-
-
 	if (resuelto) {
 		state = end;
-	} else {
-		elapsed = Math.floor(( new Date().getTime() - start ) / 100 ) / 10;
 	}
-
-	Crono.text = "Tiempo: " + elapsed + " seg.";
-
-	//	console.log( "Crono = Tiempo: " + elapsed + " seg.");
-
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////
@@ -397,8 +359,8 @@ function PantallaAyuda() {
 	var graphics = new PIXI.Graphics();
 
 	// draw a rounded rectangle
-	graphics.lineStyle(4, 0x332211, 0.95)
-	graphics.beginFill( FONDO_AYUDA, 0.95);
+	graphics.lineStyle(8, 0x332211, 0.95)
+	graphics.beginFill(0x669900, 0.95);
 	graphics.drawRoundedRect(40, 40, 600, 400 );
 	graphics.endFill();
 
@@ -417,9 +379,9 @@ Deprecation Warning: text style property 'font' is now deprecated, please use th
 	'fontWeight' properties from now on
 */
 var style = {
-	//	fontFamily: "Luckiest Guy",	// Set style, size and font
-	fontSize: "32px",	// Set style, size and font
-    fontFamily: 'Sriracha',
+	fontFamily: "Sriracha",	// Set style, size and font
+	fontSize: "24px",	// Set style, size and font
+    //	fontFamily: 'Sriracha',
     //	fontSize: 16,
     fontStyle: 'italic',
     fontWeight: 'light',
@@ -455,21 +417,21 @@ var style = {
 	richText.y = 60;
 	EscenaDeAyudas.addChild(richText);
 
+	//	var richText = new Text('¿Qué es?\nSU-MA-DO es un juego-entretenimiento-desafío de lógica que requiere un mínimo conocimiento de aritmética para ser resuelto.  Es una oportunidad de ejercicio cerebral y diversión al mismo tiempo.\n¿En que consiste?\nHay nueve círculos unidos de forma tal que se forman cuadrados y triángulos.  En los círculos o vértices de cada figura se ha asignado un número diferente entre uno y nueve.  En cada figura se muestra la suma resultante de los correspondientes vértices.  El objeto del juego es deducir los valores asignados a cada círculo.  Se da como ayuda los valores de dos vértices.\n', textOptions);
+	//	richText.x = 30;
+	//	richText.y = 180;
+
+	//	EscenaDeAyudas.addChild(richText);
+
 	EscenaDeAyudas.visible = true;
-
-	BotonJugar.disabled=true;
-	BotonAyuda.disabled=true;
-	BotonSobre.disabled=true;
-	BotonAtras.disabled=false;
-
-	BotonJugar.visible = false;
-	BotonAyuda.visible = false;
-	BotonSobre.visible = false;
-	BotonAtras.visible = true;
 
 }
 
 
+function PantallaTutorial() {
+	console.log("Pantalla tutorial   -----------------------------" );
+	//	return console.log("Llamaron function PantallaTutorial");
+}
 
 function PantallaJugar() {
 	//	esta funcion prepara la escena de juego
@@ -491,10 +453,9 @@ function PantallaJugar() {
 	tablero.scale.set(1.00);
 	EscenaDeJuego.addChild(tablero);
 
-	Crono = new Text( "Tiempo : ", { fontFamily: "Sriracha",	fontSize: "16px", fill: "#a00"  } );	
-	Crono.position.set(400, 10 );
-	EscenaDeJuego.addChild(Crono);
-
+	//Make the `draggableObjects' scene visible when the game first starts
+	//	EscenaDeJuego.visible = true;
+	//	EscenarioGral.addChild(EscenaDeJuego);
 
 	// creacion de los sprites draggables para cada nro
 	for ( i = 1; i < 10; i++)
@@ -554,19 +515,23 @@ function PantallaJugar() {
 	for ( i = 0; i < 6; i++)
 	{
 		//	aSumaPolig[i] = new PIXI.Text("999", {font:"50px Sigmar One", fill:"red"});
-		aSumaPolig[i] = new Text("999", { fontFamily: "Sriracha",	fontSize: "48px",  fill:"#09f"} ) ;
-		//	aSumaPolig[i] = new Text("999", { fontFamily: "Luckiest Guy",	fontSize: "48px",  fill:"#09f"} ) ;
+		aSumaPolig[i] = new Text("999", { fontFamily: "Sriracha",	fontSize: "48px",  fill:"#030"} ) ;
 
 		//	aSumaPolig[0].text = "XXX" ;
 		//	aSumaPolig[i].style = {font:"50px Sigmar One", fill:"red"} ;
 		//	MessExtra = new Text( "Vamos a sumar...!", { fontFamily: 'Sriracha', fontSize: "24px" } );
 
+	
+		//	message = new PIXI.Text( aSumaPolig[i], { font: "56px Calibri", fill : "green", align : 'right'});
 		aSumaPolig[i].position.set(aPosPolig [i][0], aPosPolig [i][1]);
 		EscenaDeJuego.addChild( aSumaPolig[i] );
 	}
 
 }
 
+function PantallaEstadistica() {
+	console.log("PantallaEstadistica -----------------------------");
+}
 
 
 function Jugar() {
@@ -579,28 +544,28 @@ function Jugar() {
 //	definir cuales son las escenas visibles y cuales invisibles
 	EscenaDeAyudas.visible = false;
 	EscenaDeJuego.visible = true;
-	EscenaSobre.visible = false;
+	EscenaEstadist.visible = false;
 	EscenaFinJuego.visible = false;
 	EscenaMenuInic.visible = false;
 	EscenarioGral.visible = true;
 
-	EscenaDeJuego.alpha = 0.99 ;
+	EscenaDeJuego.alpha = 0.9 ;
 
 	//	pruebo quitar al boton del area visible (para no destuirlo y crearlo nuevmante)
 	//	...y esto funciona. Asi es que...
 	BotonJugar.y = LINEA_BOTONES_OFF;
 	BotonAyuda.y = LINEA_BOTONES_OFF;	
-	BotonSobre.y = LINEA_BOTONES_OFF;
+	BotonPuntos.y = LINEA_BOTONES_OFF;
 	BotonAtras.y = LINEA_BOTONES;
 
 	BotonJugar.disabled=true;
 	BotonAyuda.disabled=true;
-	BotonSobre.disabled=true;
+	BotonPuntos.disabled=true;
 	BotonAtras.disabled=false;
 
 	BotonJugar.visible = false;
 	BotonAyuda.visible = false;
-	BotonSobre.visible = false;
+	BotonPuntos.visible = false;
 	BotonAtras.visible = true;
 
 	//	posicionar los sprites de numeros
@@ -614,10 +579,7 @@ function Jugar() {
 	}
 
 	GenJuego()		//	genera un nuevo juego
-
-	start = new Date().getTime();
-	elapsed = 0;
-
+	
 	state = play;
 
 }
@@ -638,27 +600,25 @@ function Menu() {
 	//	definir cuales son las escenas visibles y cuales invisibles
 	EscenaDeAyudas.visible = false;		//	container ayudas
 	EscenaDeJuego.visible = false;
-	EscenaSobre.visible = false;		//	container estadisticas
+	EscenaEstadist.visible = false;		//	container estadisticas
 	EscenaFinJuego.visible = false;		//	container aviso de fin del juego
 	EscenaMenuInic.visible = true;		//	container pantalla de inicio
 	EscenarioGral.visible = true;		//	container del juego
 
 	BotonJugar.y = LINEA_BOTONES;
 	BotonAyuda.y = LINEA_BOTONES;		//	durante el juego mantenemos el boton de ayuda
-	BotonSobre.y = LINEA_BOTONES;
-	//	BotonAtras.y = LINEA_BOTONES_OFF;
-	BotonAtras.y = LINEA_BOTONES;
+	BotonPuntos.y = LINEA_BOTONES;
+	BotonAtras.y = LINEA_BOTONES_OFF;
 
 	//	BotonJugar.disabled=false;
 	//	BotonAyuda.disabled=false;
-	//	BotonSobre.disabled=false;
+	//	BotonPuntos.disabled=false;
 	//	BotonAtras.disabled=true;
 
 	BotonJugar.visible = true;
 	BotonAyuda.visible = true;
-	BotonSobre.visible = true;
-	//	BotonAtras.visible = false;
-	BotonAtras.visible = true;
+	BotonPuntos.visible = true;
+	BotonAtras.visible = false;
 
 	state = Menu;
 	//	state = "";
@@ -670,14 +630,14 @@ function Ayuda() {
 //	definir cuales son las escenas visibles y cuales invisibles
 	EscenaDeAyudas.visible = true;
 	EscenaDeJuego.visible = false;
-	EscenaSobre.visible = false;
+	EscenaEstadist.visible = false;
 	EscenaFinJuego.visible = false;
 	EscenaMenuInic.visible = false;
 	EscenarioGral.visible = true;
 
 	BotonJugar.y = LINEA_BOTONES_OFF;
 	BotonAyuda.y = LINEA_BOTONES_OFF;		//	durante el juego mantenemos el boton de ayuda
-	BotonSobre.y = LINEA_BOTONES_OFF;
+	BotonPuntos.y = LINEA_BOTONES_OFF;
 	BotonAtras.y = LINEA_BOTONES;
 
 	BotonAtras.visible = true;
@@ -687,111 +647,89 @@ function Ayuda() {
 
 }
 
+function Estadistica() {
+	console.log("ESTADISTICA	------------------------------------");
+}
 
 function HaceBotones() {
 	console.log("HaceBotones         -----------------------------");
-
-	var BotonTexture;
-
 
 	//	Prepara los botones con las opciones de juego, ayuda, puntaje
 	//	Create an alias for the texture atlas frame ids
 	//	Hay varias formas de crear sprites a partir del atlas. Esta sería la mas expeditiva.
 	//	Get a reference to the texture atlas id's
-	//	var buttonFrames			//	almacenar el array de imagenes del boton
+	var buttonFrames			//	almacenar el array de imagenes del boton
 
 	//	The button state textures
 	//	Preparacion boton de juego
-	//	buttonFrames = [id["botonjugarup.png"], id["botonjugarover.png"], 	id["botonjugardown.png"]];
-	
-	//	BotonJugar = t.button(buttonFrames, 100, LINEA_BOTONES );
-	//	BotonJugar = id["botonjugarup.png"];
+	buttonFrames = [id["botonjugarup.png"], id["botonjugarover.png"], 	id["botonjugardown.png"]];
 
-	//	-------------------------------------------------------------	//	Preparacion del boton jugar
-	BotonTexture = PIXI.utils.TextureCache["botonjugarup.png"];
-	BotonJugar = new PIXI.Sprite(BotonTexture);
-	// Set the initial position
-	BotonJugar.anchor.set(0.5);
-	BotonJugar.x = 100;
-	BotonJugar.y =  LINEA_BOTONES;
-	// Opt-in to interactivity
-	BotonJugar.interactive = true;
-	// Shows hand cursor
-	BotonJugar.buttonMode = true;
-	// Pointers normalize touch and mouse
-	BotonJugar.on('pointerdown', Jugar );
-	BotonJugar.on('click', Jugar ); // mouse-only
-	BotonJugar.on('tap', Jugar ); // touch-only
+	BotonJugar = t.button(buttonFrames, 100, LINEA_BOTONES );
 	BotonJugar.scale.set(0.7);
-	//	Add the button to the EscenarioGral
-	EscenarioGral.addChild(BotonJugar);
 
-	//	-------------------------------------------------------------
+	//	Add the button to the EscenarioGral
+	EscenaMenuInic.addChild(BotonJugar);
+
+	//Define the button's actions
+	BotonJugar.over		= function () {	};
+	BotonJugar.out		= function () {	};
+	BotonJugar.press	= function () { return Jugar() };
+	BotonJugar.tap		= function () {	};
+
+
 	//	Preparacion boton de ayudas
-	BotonTexture = PIXI.utils.TextureCache["botonayudaup.png"];
-	BotonAyuda = new PIXI.Sprite(BotonTexture);
-	// Set the initial position
-	BotonAyuda.anchor.set(0.5);
-	BotonAyuda.x = 420;
-	BotonAyuda.y =  LINEA_BOTONES;
-	// Opt-in to interactivity
-	BotonAyuda.interactive = true;
-	// Shows hand cursor
-	BotonAyuda.buttonMode = true;
-	// Pointers normalize touch and mouse
-	BotonAyuda.on('pointerdown', Ayuda );
-	BotonAyuda.on('click', Ayuda ); // mouse-only
-	BotonAyuda.on('tap', Ayuda ); // touch-only
+	buttonFrames = [id["botonayudaup.png"], id["botonayudaover.png"], 	id["botonayudadown.png"]];
+
+	BotonAyuda = t.button(buttonFrames, 420, LINEA_BOTONES );
 	BotonAyuda.scale.set(0.7);
-	//	Add the button to the EscenarioGral
-	EscenarioGral.addChild(BotonAyuda);
+
+	//Add the button to the EscenarioGral
+	EscenaMenuInic.addChild(BotonAyuda);
+
+	//Define the button's actions
+	BotonAyuda.over = function () {	};
+	BotonAyuda.out = function () {	};
+	BotonAyuda.press = function () { return Ayuda() };
+	BotonAyuda.release = function () {	};
+	BotonAyuda.tap = function () {	};
 
 
-	//	-------------------------------------------------------------
-	//	Preparacion del boton sobre
-	BotonTexture = PIXI.utils.TextureCache["botonsobreup.png"];
-	BotonSobre = new PIXI.Sprite(BotonTexture);
-	// Set the initial position
-	BotonSobre.anchor.set(0.5);
-	BotonSobre.x = 260;
-	BotonSobre.y =  LINEA_BOTONES;
-	// Opt-in to interactivity
-	BotonSobre.interactive = true;
-	// Shows hand cursor
-	BotonSobre.buttonMode = true;
-	// Pointers normalize touch and mouse
-	BotonSobre.on('pointerdown', Sobre );
-	BotonSobre.on('click',		 Sobre ); // mouse-only
-	BotonSobre.on('tap',		 Sobre ); // touch-only
-	BotonSobre.scale.set(0.7);
-	//	Add the button to the EscenarioGral
-	EscenarioGral.addChild(BotonSobre);
+	//	Preparacion boton de puntaje
+	buttonFrames = [id["botonpuntajeup.png"], id["botonpuntajeover.png"], 	id["botonpuntajedown.png"]];
 
+	BotonPuntos = t.button(buttonFrames, 260, LINEA_BOTONES );
+	BotonPuntos.scale.set(0.7);
 
-	//	-------------------------------------------------------------
+	//Add the button to the EscenarioGral
+	EscenaMenuInic.addChild(BotonPuntos);
+
+	//Define the button's actions
+	BotonPuntos.over = function () {	};
+	BotonPuntos.out = function () {	};
+	BotonPuntos.press = function () {	return console.log("Pulsaron boton ESTADISTICA") };
+	BotonPuntos.release = function () {	};
+	BotonPuntos.tap = function () {	};
+
 	//	Preparacion boton volver a inicio
-	BotonTexture = PIXI.utils.TextureCache["botonatrasup.png"];
-	BotonAtras = new PIXI.Sprite(BotonTexture);
-	// Set the initial position
-	BotonAtras.anchor.set(0.5);
-	BotonAtras.x = 600;
-	BotonAtras.y =  LINEA_BOTONES;
-	// Opt-in to interactivity
-	BotonAtras.interactive = true;
-	// Shows hand cursor
-	BotonAtras.buttonMode = true;
-	// Pointers normalize touch and mouse
-	BotonAtras.on('pointerdown', Menu );
-	BotonAtras.on('click', Menu );
-	BotonAtras.on('tap', Menu );
+	buttonFrames = [id["botonatrasup.png"], id["botonatrasover.png"], 	id["botonatrasdown.png"]];
+
+	BotonAtras = t.button(buttonFrames, 600, LINEA_BOTONES );
 	BotonAtras.scale.set(0.7);
-	//	Add the button to the EscenarioGral
+
+	//Add the button to the EscenarioGral
 	EscenarioGral.addChild(BotonAtras);
+
+	//Define the button's actions
+	BotonAtras.over = function () {	};
+	BotonAtras.out = function () {	};
+	BotonAtras.press = function () { Menu() };
+	BotonAtras.release = function () {	};
+	BotonAtras.tap = function () {	};
 
 }
 
 //--------------------------------
-	
+
 
 function onDragStart(event)
 {
@@ -1043,22 +981,36 @@ function end() {
 	//	definir cuales son las escenas visibles y cuales invisibles
 	EscenaDeAyudas.visible = false;		//	container ayudas
 	EscenaDeJuego.visible = true;
-	EscenaSobre.visible = false;		//	container estadisticas
+	EscenaEstadist.visible = false;		//	container estadisticas
 	EscenaFinJuego.visible = true;		//	container aviso de fin del juego
 	EscenaMenuInic.visible = false;		//	container pantalla de inicio
 	EscenarioGral.visible = true;		//	container del juego
 
-	EscenaDeJuego.alpha = 0.8 ;
+	EscenaDeJuego.alpha = 0.1 ;
 
-	BotonJugar.y = LINEA_BOTONES_OFF ;
-	BotonAyuda.y = LINEA_BOTONES_OFF ;		//	durante el juego mantenemos el boton de ayuda
-	BotonSobre.y = LINEA_BOTONES_OFF ;
+	BotonJugar.y = 650;
+	BotonAyuda.y = 650;		//	durante el juego mantenemos el boton de ayuda
+	BotonPuntos.y = 650;
 	BotonAtras.y = LINEA_BOTONES;
 
 	BotonJugar.visible = true;
 	BotonAyuda.visible = true;
-	BotonSobre.visible = true;
+	BotonPuntos.visible = true;
 	BotonAtras.visible = true;
+
+
+	//	gameScene.visible = false;
+	EscenaFinJuego.visible = true;
+	//	stage.visible = false;
+	//	console.log( "state en end() |" + state + "|");
+
+	//	window.alert("Fin de juego. Otro?");
+	//	console.log("Ya avisó")
+	
+	//	aqui tendrían que venir las opciones
+	//	nuevo juego
+	//	salir
+	//	ayuda
 	
 }
 
@@ -1096,81 +1048,3 @@ function onKeyDown(key) {
 
 }
 
-
-function PantallaSobre() {
-		console.log("Pantalla sobre      -----------------------------" );
-
-//		var marco = new PIXI.Graphics();
-	var graphics = new PIXI.Graphics();
-
-	// draw a rounded rectangle
-	graphics.lineStyle(4, 0x332211, 0.95)
-	graphics.beginFill( FONDO_AYUDA, 0.95);
-	graphics.drawRoundedRect(40, 40, 600, 400 );
-	graphics.endFill();
-
-	EscenaSobre.addChild(graphics);
-
-	var richText = new Text('Sobre SU-MA-DO\n' +
-		'Es un juego desafío desarrollado por \n' +
-		'Willie Verger\n\n' +
-		'Soporte: info@ingverger.com.ar\n' +
-		'Web: ingverger.com.ar\n' +
-		'\n' , { fontFamily: "Sriracha",	fontSize: "32px", fill: "0xffffcc"  } );
-
-	//	'Se dan como ayuda los valores de dos vértices.', style);
-	richText.x = 60;
-	richText.y = 60;
-	EscenaSobre.addChild(richText);
-
-	EscenaSobre.visible = true;
-
-	BotonJugar.disabled=true;
-	BotonAyuda.disabled=true;
-	BotonSobre.disabled=true;
-	BotonAtras.disabled=false;
-
-	BotonJugar.visible = false;
-	BotonAyuda.visible = false;
-	BotonSobre.visible = false;
-	BotonAtras.visible = true;
-
-}
-
-function Sobre() {
-	console.log("Sobre	-------------------------------------------");
-
-//	definir cuales son las escenas visibles y cuales invisibles
-	EscenaDeAyudas.visible = false;
-	EscenaDeJuego.visible = false;
-	EscenaSobre.visible = true;
-	EscenaFinJuego.visible = false;
-	EscenaMenuInic.visible = false;
-	EscenarioGral.visible = true;
-
-	BotonJugar.y = LINEA_BOTONES_OFF;
-	BotonAyuda.y = LINEA_BOTONES_OFF;		//	durante el juego mantenemos el boton de ayuda
-	BotonSobre.y = LINEA_BOTONES_OFF;
-	BotonAtras.y = LINEA_BOTONES;
-
-	BotonAtras.visible = true;
-	BotonAtras.disabled=false;
-
-	state = Sobre;
-
-}
-
-
-function resize() {
- 
-  // Determine which screen dimension is most constrained
-  var ratio = Math.min(window.innerWidth/RENDERER_W,
-                   window.innerHeight/RENDERER_H);
- 
-  // Scale the view appropriately to fill that dimension
-  EscenarioGral.scale.x = EscenarioGral.scale.y = ratio;
- 
-  // Update the renderer dimensions
-  renderer.resize(Math.ceil(RENDERER_W * ratio),
-                  Math.ceil(RENDERER_H * ratio));
-}

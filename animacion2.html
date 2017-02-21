@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Animacion 2 </title>
+    <style>
+        body {
+            margin: 50;
+            padding: 50;
+            background-color: #888;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Include pixi.js 4.0.0 -->
+    <!-- <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pixi.js/4.0.0/pixi.min.js"></script> -->
+
+	<script src="http://pixijs.download/release/pixi.min.js"></script>
+
+    <script>
+
+	var	RENDERER_W = 680,
+		RENDERER_H = 520;
+
+		//	var app = new PIXI.Application(800, 600, { antialias: true });
+		var app = new PIXI.Application(800, 600 );	//	, { antialias: true });
+		document.body.appendChild(app.view);
+
+		var texture = PIXI.Texture.fromImage('images/mensa.png');
+
+		var logomensa = new PIXI.Sprite(texture);
+		logomensa.x = RENDERER_W / 2;
+		logomensa.y = RENDERER_H / 2;
+
+		//	container.addChild(logomensa);
+
+		app.stage.interactive = true;
+
+		//	var graphics = new PIXI.Graphics();
+
+		// set a fill and line style again
+		//	graphics.lineStyle(10, 0xFF0000, 0.8);
+		//	graphics.beginFill(0xFF700B, 1);
+
+
+		// let's create a moving shape
+		app.stage.addChild(logomensa);
+
+		var count = 0;
+
+		app.ticker.add(function() {
+
+			count += 0.03;
+
+			logomensa.scale.set(1 + Math.sin(count) * 0.2);
+
+		});
+
+    </script>
+</body>
+
+</html>

@@ -1,17 +1,7 @@
 /*	
 	menu.js
-
-	Colores para botones #ff6600
-
-	5/2/2017	vers 0.81	reposicionamiento con dibujos nuevos
-	27/1/2017	vers 0.76
-	25/1/2017	vers 0.75	
-	24/1/2017	vers 0.7	agrego el generador de vertices aleatorio.
-							ya no setá mas hard coded
-	22/1/2017	vers 0.6
-
-php -S localhost:8080
-
+	version de trabajo
+	11/7/2017	vers 1.0
 */
 
 //Aliases
@@ -23,11 +13,10 @@ var	LIMITE_TABLERO = 450,
 	LINEA_BOTONES_OFF = 700,
 	RENDERER_W = 680,
 	RENDERER_H = 520,
-	FONDO_AYUDA = 0x008cff,			//	FONDO_AYUDA = "#690",			
-	FONDO_JUEGO = "0xffffff",		//	 "#ffc",
-	FONDO_ACERCA = "#000",
+	FONDO_AYUDA = 0x008cff,
+	FONDO_JUEGO = "0xffffff",
+	VERSION	= "1.0",
 	DEBUG = false;
-	//	DEBUG = true;
 
 var Container = PIXI.Container,
     autoDetectRenderer = PIXI.autoDetectRenderer,
@@ -64,7 +53,7 @@ renderer.view.style.left = "0px";
 
 
 //	Set the canvas's border style and background color
-renderer.view.style.border = "5px solid #800";
+renderer.view.style.border = "5px solid #888";
 renderer.backgroundColor = FONDO_JUEGO;
 
 
@@ -93,8 +82,16 @@ var aNumeros = [],		//	array con los numeros
 	nVertice = undefined,
 	pointer = undefined,
 	state = undefined, 
-    gridstep = 150,
-    resuelto = false;
+    gridstep = 150;
+    //	resuelto = false;
+
+//	estructura del vector aVertices
+//	aVertices[i] = [ 
+//		numero de vértice, 
+//		valor asignado en inicio
+//		número colocado (o vacio)
+//		indicador de fijo o movil]
+
 
 //load resources; a JSON file and run the `setup` function when it's done 
 loader.add("images/sumadotileset.json")	.load(setup);
@@ -103,16 +100,8 @@ loader.add("images/sumadotileset.json")	.load(setup);
 
 function setup() {
 	//	Preparacion general
-	console.log("setup	            -----------------------------" );
-
-	//	Create a new instance of Tink
-	//	t = new Tink(PIXI, renderer.view);
-
 	//	Create an alias for the texture atlas frame ids
-	//	Hay varias formas de crear sprites a partir del atlas. Esta sería la mas expeditiva.
-	//	Get a reference to the texture atlas id's
 	id = resources["images/sumadotileset.json"].textures;
-	console.log("id = : " + id );
 
 	//	Make the game scene and add it to the EscenarioGral
 	EscenarioGral = new Container();
@@ -156,8 +145,6 @@ function setup() {
 	//	state = play;
 	state = Menu;
 
-	//	Menu()
-
 	//	Una grilla para ubicarnos en el canvas
 	if (DEBUG) 
 	{
@@ -171,62 +158,24 @@ function setup() {
 	EscenaDeAyudas.visible = true;
 	EscenaSobre.visible = false;
 
-/*
-var style = {
-	fontFamily: "Sriracha",	
-    fontFamily: 'Luckiest Guy',
-    fontSize: "64px",
-    fontStyle: 'italic',
-    fontWeight: 'light',
-    //	fill: ['#ffffff', '#00ff99'], // gradient
-    fill: '#442211',
-    stroke: '#4a1850',
-    strokeThickness: 1,
-    dropShadow: false,
-    dropShadowColor: '#000000',
-    dropShadowBlur: 4,
-    dropShadowAngle: Math.PI / 6,
-    dropShadowDistance: 6,
-    wordWrap: true,
-    wordWrapWidth: 550
-};
-*/
+	var style = {
+		fontFamily: 'Luckiest Guy',
+		//	fontFamily: "Sriracha",	
+		fontSize: "32px", 
+		fill: "#600" } ;
 
-var style = {
-    fontFamily: 'Luckiest Guy',
-	//	fontFamily: "Sriracha",	
-	fontSize: "32px", 
-	fill: "#600" } ;
+		MessageFin = new Text( "Solución correcta.\nFelicitaciones!", style	);	
 
-	//	MessageFin = new Text( "Buenísimo!/nHas resuelto correctamente.", { fontFamily: "Luckiest Guy",	fontSize: "64px", fill: "0x880000"  } );
-	MessageFin = new Text( "Solución correcta.\nFelicitaciones!", style	);	
-	//	{ fontFamily: "Delius",	fontSize: "40px", fill: "0x880000"  } );
-
-	MessageFin.position.set(100, 420 );
-	EscenaFinJuego.addChild(MessageFin);
-
-
+		MessageFin.position.set(250, 420 );
+		EscenaFinJuego.addChild(MessageFin);
 	//	detectar y procesar teclas pulsadas mediante 'keydown' event listener en el document
 	document.addEventListener('keydown', onKeyDown);
-
-
-
 	//Start the game loop
 	gameLoop();
-
-    // render the EscenarioGral
-	//	renderer.render(EscenarioGral);
-    //	renderer.render(EscenarioGral);
-
-	console.log("fin setup			-----------------------------" );
-
 }
 
 
 function PantallaInicio() {
-
-	console.log("Pantalla inicio     -----------------------------" );
-
 	EscenaMenuInic.visible = true;
 
 	//	titulo del menu y juego
@@ -237,23 +186,6 @@ function PantallaInicio() {
 	// make it a bit bigger, so it's easier to grab
 	spritesumado.scale.set(1.0);
 	EscenaMenuInic.addChild(spritesumado);
-
-	//	var style = new PIXI.TextStyle({
-	//		fontFamily: 'Sriracha',
-	//		fontSize: 20,
-	//		fontStyle: 'italic',
-	//		fontWeight: 'bold',
-	//		fill: ['#442244', '#00ff99'], // gradient
-	//		stroke: '#4a1850',
-	//		strokeThickness: 0,
-	//		dropShadow: true,
-	//		dropShadowColor: '#000000',
-	//		dropShadowBlur: 14,
-	//		dropShadowAngle: Math.PI / 6,
-	//		dropShadowDistance: 6,
-	//		wordWrap: true,
-	//		wordWrapWidth: 440
-	//	});
 
 	//	MessExtra = new Text( "Vamos a sumar...!", style );
 	var MessExtra = new Text( 'Vamos a sumar...!',   { fontFamily: "Sriracha", fontSize: "32px", fill:"blue"} ) ;
@@ -271,8 +203,8 @@ function PantallaInicio() {
 	EscenaMenuInic.addChild(MessExtra);
 	EscenaMenuInic.addChild(MessExtra2);
 
-//------------------------------------------------------------
-//	AGREGO LOGO OMENSA
+	//------------------------------------------------------------
+	//	AGREGO LOGO OMENSA
 		var texture = PIXI.Texture.fromImage('images/mensa.png');
 
 		var logomensa = new PIXI.Sprite(texture);
@@ -312,25 +244,12 @@ function PantallaInicio() {
 
 
 function gameLoop() {
-
-	//	console.log( "gameloop() ----------------------------" );
-
 	//Loop this function 60 times per second
 	requestAnimationFrame(gameLoop);
-
-	//	console.log("Ahora viene state()" + state );
 	//	Run the current state
 	state();
-	//	play();
-
-	//	console.log( "state en gameloop() |" + state + "|");
-
-	//Update Tink
-	//	t.update();
-
 	//Render the EscenarioGral
 	renderer.render(EscenarioGral);
-
 }
 
 
@@ -338,18 +257,13 @@ function gameLoop() {
 
 //	--------------------------------------
 function play() {
-
-
-	if (resuelto) {
+	if ( VerificaSuma() ) {
 		state = end;
 	} else {
 		elapsed = Math.floor(( new Date().getTime() - start ) / 100 ) / 10;
 	}
 
 	Crono.text = "Tiempo: " + elapsed + " seg.";
-
-	//	console.log( "Crono = Tiempo: " + elapsed + " seg.");
-
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////
@@ -357,8 +271,7 @@ function play() {
 //	solamente para depurar
 function DibujaGrilla() {
 
-	console.log("Dibuja Grilla       -----------------------------" );
-
+	
 	for (var i = 0; i < 18; i++)
 	{
 		//	lineas horizontales
@@ -369,9 +282,6 @@ function DibujaGrilla() {
 		line.x = 0;
 		line.y = ( 50 * i ) + 25 ;
 		EscenarioGral.addChild(line);
-		//	console.log( "Linea en posicion: " + line.y );
-
-		//	lineas verticales
 		//	var line = new PIXI.Graphics();
 		line = new PIXI.Graphics();
 		line.lineStyle(1, "#ace", 0.5);
@@ -386,8 +296,6 @@ function DibujaGrilla() {
 
 
 function PantallaAyuda() {
-		console.log("Pantalla ayuda      -----------------------------" );
-
 //		var marco = new PIXI.Graphics();
 	var graphics = new PIXI.Graphics();
 
@@ -399,26 +307,11 @@ function PantallaAyuda() {
 
 	EscenaDeAyudas.addChild(graphics);
 
-	console.log("EscenarioGral.width:" + EscenarioGral.width )
-	console.log("EscenarioGral.height:" + EscenarioGral.height )
-
-//	var style = new PIXI.TextStyle({
-/*
-Deprecation Warning: text style property 'font' is now deprecated, please use the 
-	'fontFamily',
-	'fontSize',
-	fontStyle',
-	'fontVariant' and 
-	'fontWeight' properties from now on
-*/
 var style = {
-	//	fontFamily: "Luckiest Guy",	// Set style, size and font
-	fontSize: "32px",	// Set style, size and font
+	fontSize: "32px",
     fontFamily: 'Sriracha',
-    //	fontSize: 16,
     fontStyle: 'italic',
     fontWeight: 'light',
-    //	fill: ['#ffffff', '#00ff99'], // gradient
     fill: '#ffffff',
     stroke: '#4a1850',
     strokeThickness: 1,
@@ -467,9 +360,6 @@ var style = {
 
 
 function PantallaJugar() {
-	//	esta funcion prepara la escena de juego
-	console.log("Pantalla Jugar      -----------------------------" );
-
 	var tablero,
 		i = undefined,			//	para conteo usos varios
 		aPosPolig = undefined,
@@ -544,7 +434,7 @@ function PantallaJugar() {
 
 	//	colocamos las sumas de los poligonos en posición
 	//	aPosPolig da la posición del texto indicador de la suma.
-	aPosPolig = [[145, 095],[090, 146],[270, 120],[120, 270],[300, 246],[240, 296] ];
+	aPosPolig = [[145, 95],[90, 146],[270, 120],[120, 270],[300, 246],[240, 296] ];
 
 	for ( i = 0; i < 6; i++)
 	{
@@ -566,11 +456,6 @@ function PantallaJugar() {
 
 function Jugar() {
 	var i = undefined;
-
-	console.log("Jugar ----------------------------------------");
-
-    resuelto = false;
-
 //	definir cuales son las escenas visibles y cuales invisibles
 	EscenaDeAyudas.visible = false;
 	EscenaDeJuego.visible = true;
@@ -618,18 +503,6 @@ function Jugar() {
 }
 
 function Menu() {
-	//	console.log("MENU ----------------------------------------------");
-
-	//	para asegurarnos el estilo de texto
-	//	MessExtra.style = {
-	//		fontFamily: 'Luckiest Guy',
-	//		fontSize: 20,
-	//		fontStyle: 'italic',
-	//		fontWeight: 'light',
-	//		fill:"#442244"
-	//	} ;
-	//	MessExtra.style = {font:"20px Sriracha", fill:"#ffffcc"} ;
-
 	//	definir cuales son las escenas visibles y cuales invisibles
 	EscenaDeAyudas.visible = false;		//	container ayudas
 	EscenaDeJuego.visible = false;
@@ -641,18 +514,10 @@ function Menu() {
 	BotonJugar.y = LINEA_BOTONES;
 	BotonAyuda.y = LINEA_BOTONES;		//	durante el juego mantenemos el boton de ayuda
 	BotonSobre.y = LINEA_BOTONES;
-	//	BotonAtras.y = LINEA_BOTONES_OFF;
 	BotonAtras.y = LINEA_BOTONES;
-
-	//	BotonJugar.disabled=false;
-	//	BotonAyuda.disabled=false;
-	//	BotonSobre.disabled=false;
-	//	BotonAtras.disabled=true;
-
 	BotonJugar.visible = true;
 	BotonAyuda.visible = true;
 	BotonSobre.visible = true;
-	//	BotonAtras.visible = false;
 	BotonAtras.visible = true;
 
 	state = Menu;
@@ -660,8 +525,6 @@ function Menu() {
 }
 
 function Ayuda() {
-	console.log("AYUDA	-------------------------------------------");
-
 //	definir cuales son las escenas visibles y cuales invisibles
 	EscenaDeAyudas.visible = true;
 	EscenaDeJuego.visible = false;
@@ -684,30 +547,33 @@ function Ayuda() {
 
 
 function HaceBotones() {
-	console.log("HaceBotones         -----------------------------");
-
 	var BotonTexture;
+	//	Preparacion boton volver a inicio
+	BotonTexture = PIXI.utils.TextureCache["botonatrasup.png"];
+	BotonAtras = new PIXI.Sprite(BotonTexture);
+	// Set the initial position
+	BotonAtras.anchor.set(0.5);
+	BotonAtras.x = 100;
+	BotonAtras.y =  LINEA_BOTONES;
+	// Opt-in to interactivity
+	BotonAtras.interactive = true;
+	// Shows hand cursor
+	BotonAtras.buttonMode = true;
+	// Pointers normalize touch and mouse
+	BotonAtras.on('pointerdown', Menu );
+	BotonAtras.on('click', Menu );
+	BotonAtras.on('tap', Menu );
+	BotonAtras.scale.set(0.7);
+	//	Add the button to the EscenarioGral
+	EscenarioGral.addChild(BotonAtras);
 
-
-	//	Prepara los botones con las opciones de juego, ayuda, puntaje
-	//	Create an alias for the texture atlas frame ids
-	//	Hay varias formas de crear sprites a partir del atlas. Esta sería la mas expeditiva.
-	//	Get a reference to the texture atlas id's
-	//	var buttonFrames			//	almacenar el array de imagenes del boton
-
-	//	The button state textures
-	//	Preparacion boton de juego
-	//	buttonFrames = [id["botonjugarup.png"], id["botonjugarover.png"], 	id["botonjugardown.png"]];
-	
-	//	BotonJugar = t.button(buttonFrames, 100, LINEA_BOTONES );
-	//	BotonJugar = id["botonjugarup.png"];
 
 	//	-------------------------------------------------------------	//	Preparacion del boton jugar
 	BotonTexture = PIXI.utils.TextureCache["botonjugarup.png"];
 	BotonJugar = new PIXI.Sprite(BotonTexture);
 	// Set the initial position
 	BotonJugar.anchor.set(0.5);
-	BotonJugar.x = 100;
+	BotonJugar.x = 260;
 	BotonJugar.y =  LINEA_BOTONES;
 	// Opt-in to interactivity
 	BotonJugar.interactive = true;
@@ -722,33 +588,12 @@ function HaceBotones() {
 	EscenarioGral.addChild(BotonJugar);
 
 	//	-------------------------------------------------------------
-	//	Preparacion boton de ayudas
-	BotonTexture = PIXI.utils.TextureCache["botonayudaup.png"];
-	BotonAyuda = new PIXI.Sprite(BotonTexture);
-	// Set the initial position
-	BotonAyuda.anchor.set(0.5);
-	BotonAyuda.x = 420;
-	BotonAyuda.y =  LINEA_BOTONES;
-	// Opt-in to interactivity
-	BotonAyuda.interactive = true;
-	// Shows hand cursor
-	BotonAyuda.buttonMode = true;
-	// Pointers normalize touch and mouse
-	BotonAyuda.on('pointerdown', Ayuda );
-	BotonAyuda.on('click', Ayuda ); // mouse-only
-	BotonAyuda.on('tap', Ayuda ); // touch-only
-	BotonAyuda.scale.set(0.7);
-	//	Add the button to the EscenarioGral
-	EscenarioGral.addChild(BotonAyuda);
-
-
-	//	-------------------------------------------------------------
 	//	Preparacion del boton sobre
 	BotonTexture = PIXI.utils.TextureCache["botonsobreup.png"];
 	BotonSobre = new PIXI.Sprite(BotonTexture);
 	// Set the initial position
 	BotonSobre.anchor.set(0.5);
-	BotonSobre.x = 260;
+	BotonSobre.x = 420;
 	BotonSobre.y =  LINEA_BOTONES;
 	// Opt-in to interactivity
 	BotonSobre.interactive = true;
@@ -762,26 +607,25 @@ function HaceBotones() {
 	//	Add the button to the EscenarioGral
 	EscenarioGral.addChild(BotonSobre);
 
-
 	//	-------------------------------------------------------------
-	//	Preparacion boton volver a inicio
-	BotonTexture = PIXI.utils.TextureCache["botonatrasup.png"];
-	BotonAtras = new PIXI.Sprite(BotonTexture);
+	//	Preparacion boton de ayudas
+	BotonTexture = PIXI.utils.TextureCache["botonayudaup.png"];
+	BotonAyuda = new PIXI.Sprite(BotonTexture);
 	// Set the initial position
-	BotonAtras.anchor.set(0.5);
-	BotonAtras.x = 600;
-	BotonAtras.y =  LINEA_BOTONES;
+	BotonAyuda.anchor.set(0.5);
+	BotonAyuda.x = 580;
+	BotonAyuda.y =  LINEA_BOTONES;
 	// Opt-in to interactivity
-	BotonAtras.interactive = true;
+	BotonAyuda.interactive = true;
 	// Shows hand cursor
-	BotonAtras.buttonMode = true;
+	BotonAyuda.buttonMode = true;
 	// Pointers normalize touch and mouse
-	BotonAtras.on('pointerdown', Menu );
-	BotonAtras.on('click', Menu );
-	BotonAtras.on('tap', Menu );
-	BotonAtras.scale.set(0.7);
+	BotonAyuda.on('pointerdown', Ayuda );
+	BotonAyuda.on('click', Ayuda ); // mouse-only
+	BotonAyuda.on('tap', Ayuda ); // touch-only
+	BotonAyuda.scale.set(0.7);
 	//	Add the button to the EscenarioGral
-	EscenarioGral.addChild(BotonAtras);
+	EscenarioGral.addChild(BotonAyuda);
 
 }
 
@@ -795,19 +639,12 @@ function onDragStart(event)
     // we want to track the movement of this particular touch
     this.data = event.data;
     this.alpha = 0.5;
-
-	console.log( " this.data: " + this.val );
-
 	if ( this.val != aVertices[2][1] && this.val != aVertices[6][1]  )
 	{
 	    this.dragging = true;
 	}
 
 	var newPosition = this.data.getLocalPosition(this.parent);
-
-	/////////////////////////////
-	//	debug
-	//	console.log( "inicio onDragStart ----------------------------" );
 
 	if (this.data)
 	{
@@ -830,21 +667,10 @@ function onDragEnd()
 	//	no usado ???	var nLineaOffset = 100;
 	//	this sería el sprite con numero a posicionar
 	var lNumOK = false,
-		i = undefined;		//	indica numero bien ubicado
-
-	console.log( "onDragEnd() ---------------------------------------------" );
-
+	i = undefined;		//	indica numero bien ubicado
     if (this.dragging)
     {
         var newPosition = this.data.getLocalPosition(this.parent);
-		//	parece que this.parent es el puntero del mouse
-		//	newPosition tiene las coordenadas del puntero del mouse
-
-		//	debo detectar si estoy en el area del tablero o area de estacionamiento de fichas
-		//	ficha es un sprite asociado a un número a colocar en tablero.
-		//	console.log( "Iniciando onDragEnd() puntero en : " + newPosition.x.toString().substr(0,8) +','+ newPosition.y.toString().substr(0,8) );
-		//	console.log( "this.val: " + this.val)
-
 
 		//	Estamos en el tablero o afuera?
 		if ( newPosition.x < 0 || newPosition.x > LIMITE_TABLERO || newPosition.y < 0 || newPosition.y > LIMITE_TABLERO )
@@ -853,24 +679,10 @@ function onDragEnd()
 			//	console.log( "afuera del tablero!.  ficha-numero va al estacionamiento")	
 			lNumOK = false;
 		} else { 
-			//	dentro del tablero
-			//	console.log( "dentro del tablero")
-			//	usamos sentencia switch para determinar en que vertice debe caer la ficha numérica
-			//	primero evaluamos el vértice que corresponde
-			//	El nro de vertice ( nVertice ) estará dado por
 			nVertice = Math.floor( newPosition.x / gridstep ) + 3 * Math.floor( newPosition.y / gridstep ) 
-
-			//	console.log( "Math.floor( newPosition.x / gridstep ) = " + Math.floor( newPosition.x / gridstep ) )
-			//	console.log( "3 * Math.floor( newPosition.y / gridstep = " + 3 * Math.floor( newPosition.y / gridstep ) )
-			console.log( "nVertice = " + nVertice )
-			//	console.log( "aVertices[nVertice] = " + aVertices[nVertice,1] + ',' + aVertices[nVertice,2] + ',' + aVertices[nVertice,3] )
-			//	console.log( "aVertices[nVertice] = |" + aVertices[nVertice] + '|' )
-
 			//	Ahora distinguir si nVertice está libre u ocupado
 			if (aVertices[nVertice][2] === "" )
 			{
-				//	si vertice está libre
-				//	console.log( "vertice esta libre!")
 				lNumOK = true;
 
 				//	voy a ustilizar la posición del vertice 'almacenada' en el mismo
@@ -880,31 +692,17 @@ function onDragEnd()
 				aVertices[nVertice][2] = this.val;
 
 			} else {
-				//	va al estacionamiento.
-				//	console.log( "ficha-numero va al estacionamiento")
-				//	move the sprite to its designated position
 				lNumOK = false;
-
-				//	newPosition.x = 700;
-				//	newPosition.y = 80 + this.val * 50;
 			}
 		}
 
 		if ( !lNumOK )
 		{
 			//	formula para calcular posicion de estacionamiento
-			newPosition.x = LIMITE_TABLERO + 50 + ( this.val % 2) * 60 ;
+			newPosition.x = LIMITE_TABLERO + 50 + ( 2 - ( 2 + this.val )  % 3 ) * 60 ;
 			newPosition.y = this.val * 50 ;
 		}
 
-		//	console.log( "saliendo de ondragmove --> posicion: " + newPosition.x + ", " + newPosition.y );
-		/////////////////////////////////////////////////////
-
-		//	for (var i = 0; i < aVertices.length ; i++)
-		//	{
-		//		console.log( "aVertices[" + i + "] = |" + aVertices[i] + '|' )
-		//	}
-		//
 		this.position.x = newPosition.x;
         this.position.y = newPosition.y;
     }
@@ -915,27 +713,6 @@ function onDragEnd()
 
     // set the interaction data to null
     this.data = null;
-
-	//	console.log( "aVertices.length : " + aVertices.length );
-
-	//	chequeo si hay solución. para esto debe ser aVertices[i][1] == aVertices[i][2] para todo i
-	//	esto deberia ir a la funcion play... ???
-	resuelto = true;
-
-	for ( i = 0 ; i < aVertices.length ; i++)
-	{
-		if ( aVertices[i][1] != aVertices[i][2] )
-		{
-			resuelto = false;
-		}
-	}
-
-	/////////////////////////////
-	//	debug
-	//	console.log( "resuelto : " + resuelto );
-	//	console.log( "saliendo de Dragend, this.position: " + this.position.x + "," + this.position.y );
-	//	console.log( "--------------------------------------------------" );
-
 }
 
 
@@ -954,8 +731,6 @@ function onDragMove()
 
 function GenJuego()			//	genera un nuevo juego
 {
-	console.log("GenJuego -----------------------------" );
-
 	//	la funciones para el ordenamiento
 	var aTemp = undefined,
 		//	aPosPolig = [],		//	array con posición de datos poligonos
@@ -979,8 +754,6 @@ function GenJuego()			//	genera un nuevo juego
 	for ( i = 0; i < 9; i++)
 	{
 		aVertices[i] = [i, aVertex[i][0], "", false]
-		console.log( "Vertice " + i + " |" + aVertices[i][0] + "|" + aVertices[i][1] + "|" + aVertices[i][2] + "|" + aVertices[i][3] + "|"  );
-		//			aVertices[2][1] && this.val != aVertices[6][1]  )
 	}
 
 
@@ -1033,8 +806,6 @@ function bubbleSort(inputArray, start, rest) {
 
 
 function end() {
-	console.log("End() " );
-	
 	//	definir cuales son las escenas visibles y cuales invisibles
 	EscenaDeAyudas.visible = false;		//	container ayudas
 	EscenaDeJuego.visible = true;
@@ -1063,27 +834,21 @@ function end() {
 function onKeyDown(key) {
 
 	var	cualTecla = key.key;
-	console.log( "cualTecla :" + cualTecla );
-
     if (key.key === "*" ) {
 		state = Menu;
     }
-
     // W Key is 87
-    // Up arrow is 87
+    // Up arrow is 38
     if (key.keyCode === 87 || key.keyCode === 38) {
     }
-
     // S Key is 83
     // Down arrow is 40
     if (key.keyCode === 83 || key.keyCode === 40) {
     }
-
     // A Key is 65
     // Left arrow is 37
     if (key.keyCode === 65 || key.keyCode === 37) {
     }
-
     // D Key is 68
     // Right arrow is 39
     if (key.keyCode === 68 || key.keyCode === 39) {
@@ -1093,11 +858,7 @@ function onKeyDown(key) {
 
 
 function PantallaSobre() {
-		console.log("Pantalla sobre      -----------------------------" );
-
-//		var marco = new PIXI.Graphics();
 	var graphics = new PIXI.Graphics();
-
 	// draw a rounded rectangle
 	graphics.lineStyle(4, 0x332211, 0.95)
 	graphics.beginFill( FONDO_AYUDA, 0.95);
@@ -1106,8 +867,8 @@ function PantallaSobre() {
 
 	EscenaSobre.addChild(graphics);
 
-	var richText = new Text('Sobre SU-MA-DO\n' +
-		'Es un juego desafío desarrollado por \n' +
+	var richText = new Text('Sobre SU-MA-DO version ' + VERSION + '\n' +
+		'Es un juego desafio desarrollado por \n' +
 		'Willie Verger\n\n' +
 		'Soporte: info@ingverger.com.ar\n' +
 		'Web: ingverger.com.ar\n' +
@@ -1133,7 +894,6 @@ function PantallaSobre() {
 }
 
 function Sobre() {
-	console.log("Sobre	-------------------------------------------");
 
 //	definir cuales son las escenas visibles y cuales invisibles
 	EscenaDeAyudas.visible = false;
@@ -1157,15 +917,22 @@ function Sobre() {
 
 
 function resize() {
- 
-  // Determine which screen dimension is most constrained
+   // Determine which screen dimension is most constrained
   var ratio = Math.min(window.innerWidth/RENDERER_W,
                    window.innerHeight/RENDERER_H);
- 
   // Scale the view appropriately to fill that dimension
   EscenarioGral.scale.x = EscenarioGral.scale.y = ratio;
- 
   // Update the renderer dimensions
   renderer.resize(Math.ceil(RENDERER_W * ratio),
                   Math.ceil(RENDERER_H * ratio));
+}
+
+function VerificaSuma() {
+//	var	resuelto = 
+	return	aSumaPolig[0].text == aVertices[0][2]+ aVertices[1][2]+ aVertices[4][2] &&
+		aSumaPolig[1].text == aVertices[0][2]+ aVertices[3][2]+ aVertices[4][2] &&
+		aSumaPolig[2].text == aVertices[1][2]+ aVertices[2][2]+ aVertices[4][2]+ aVertices[5][2] &&
+		aSumaPolig[3].text == aVertices[3][2]+ aVertices[4][2]+ aVertices[6][2]+ aVertices[7][2] &&
+		aSumaPolig[4].text == aVertices[4][2]+ aVertices[5][2]+ aVertices[8][2] &&
+		aSumaPolig[5].text == aVertices[4][2]+ aVertices[7][2]+ aVertices[8][2] ;
 }

@@ -1,0 +1,64 @@
+OBSERVACIONES Y SUGERENCIAS A LA VERSION ALFA
+
+7/8/2017	Esta carpeta para experimentar desarrollo del sumado
+		podría ir en los forks de Git
+
+PROPIAS
+	Modificar la dimensiones del sumado:  x 4, 4 x 4, 3 x 5, etc
+	Usar Servicios de Juegos de Google Play Console para agregar funciones 
+		de juego sociales a tus juegos en Android, en iOS y en la Web. 
+		Los usuarios pueden encontrar rivales a su medida en sus círculos 
+		de Google+, ver tablas de clasificación para comparar sus 
+		puntuaciones con las de otros, desbloquear logros y sincronizar 
+		a diferentes dispositivos su progreso en los juegos
+
+	Modificar el icono de la aplicacion
+	Cambiar las dimensiones del espacio de trabajo.
+	Ver el tema de los fonts de letras utilizados
+	Traducciones a otros idiomas: inglés, alemán
+
+Franco D'Ascanio
+	Boton de replay en la misma pantalla de juego
+	Almacenar mejor tiempo para comparar
+	Cambiar la posición de los circulos de ayuda
+
+Bruno Verger
+
+Ariel Jurjo
+
+Ariel Vazquez
+	Que salga apaisado.
+Guille Dianda
+Alejandro
+José
+
+----------------------------------------------
+Resumen
+
+Prioritario
+
+	Que salga apaisado.
+
+	Modificar el icono de la aplicacion
+
+	Cambiar las dimensiones del espacio de trabajo.
+
+	Usar Servicios de Juegos de Google Play Console para agregar funciones 
+		de juego sociales a tus juegos en Android, en iOS y en la Web. 
+		Los usuarios pueden encontrar rivales a su medida en sus círculos 
+		de Google+, ver tablas de clasificación para comparar sus 
+		puntuaciones con las de otros, desbloquear logros y sincronizar 
+		a diferentes dispositivos su progreso en los juegos
+
+	Ver el tema de los fonts de letras utilizados
+
+	Traducciones a otros idiomas: inglés, alemán
+
+	Boton de replay en la misma pantalla de juego
+
+	Almacenar mejor tiempo para comparar
+
+	Cambiar la posición de los circulos de ayuda
+
+Para un upgrade posterior
+	Modificar la dimensiones del sumado:  x 4, 4 x 4, 3 x 5, etc

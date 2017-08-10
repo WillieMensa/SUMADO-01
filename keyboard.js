@@ -1,5 +1,9 @@
 /*
 	keyboard.js
+	mueve un rectangulo con teclado
+	detecta colision con un rectangulo objeto
+	modifica aleatoriamente la posición del objeto
+	utiliza pixi.js
 */
 
 

@@ -8,27 +8,32 @@
 -->
 <html>
 <head>
-    <meta charset="UTF-8">
 
-    <!-- Viewport meta tag is critical to have mobile browsers
-         actually report correct screen dimensions -->
+	<meta charset="UTF-8">
+    <!-- Viewport meta tag is critical to have mobile browsers actually report correct screen dimensions -->
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
-	<title> SU-MA-DO </title>
+	<title> SUMADO - Version alfa </title>
 
+	<meta name="viewport" content="width=device-width">
+	<link href='https://fonts.googleapis.com/css?family=Press+Start+2P' rel='stylesheet' type='text/css'>
 	<link href='https://fonts.googleapis.com/css?family=Luckiest+Guy' rel='stylesheet' type='text/css'>
 	<link href='https://fonts.googleapis.com/css?family=Sriracha' rel='stylesheet' type='text/css'>
 	<link href='https://fonts.googleapis.com/css?family=Delius' rel='stylesheet' type='text/css'>
 
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<!-- 
+	<link rel="stylesheet" href="css/style.css">
+ -->  
 	<!-- Remove spacing around page contents, i.e., the game, and make
          the background pink and canvas black for debugging purposes -->
     <style>
       body {
         margin: 0; padding: 0;
         overflow: hidden;
-        background-color: #fff;
+        background-color: #444;
       }
 
-      canvas { background-color: #fff; }
+      canvas { background-color: #222222; }
 
 		@import url('https://fonts.googleapis.com/css?family=Delius');
 		@import url('https://fonts.googleapis.com/css?family=Sriracha');
@@ -43,19 +48,19 @@
 <!-- <body onload="preload();"> -->
 <body>
 
-	<!-- 
-	<p>probando
-	 -->
+	<div class="screen">
+		<div>Orientation <span id="state">unlocked</span>: <span id="type">n/a</span></div>
+		<div>
+			<button id="lock">Lock</button>
+			<button id="unlock" disabled="1">Unlock</button>
+		</div>
 
-	<!-- <script src="../pixi.js/bin/pixi.js"></script> -->
-	<!-- <script src="../../Web_Dev/Librerias/pixi.js-master/scripts/pixi.js"></script> -->
-	<!-- <script src="http://pixijs.download/release/pixi.min.js"></script> -->
+	</div>
+  
+    <script src="js/index.js"></script>
 
 	<script src="pixi.js"></script>
 
-<!-- 
-	<script src="../library/tink/bin/tink.js"></script>
- -->
 	<script src="sumado.js"></script>
 
 </body>

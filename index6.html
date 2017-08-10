@@ -1,0 +1,52 @@
+<!doctype html>
+<!--	 sumado.html -->
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+	<meta http-equiv="content-type" content="text/html; charset=iso-8859-1">
+	<link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Delius|Sriracha|Luckiest+Guy">
+	<link rel="manifest" href="manifest.json">
+
+	<title> SU-MA-DO </title>
+    <style>
+		body {
+			margin: 0; padding: 0;
+			overflow: hidden;
+			background-color: #fff;
+		}
+		canvas { background-color: #222222; }
+		@import url('https://fonts.googleapis.com/css?family=Delius');
+		@import url('https://fonts.googleapis.com/css?family=Sriracha');
+		@import url('https://fonts.googleapis.com/css?family=Luckiest+Guy');
+	}
+	</style>
+</head>
+<body>
+	<script src="pixi.js"></script>
+
+	<script >
+
+		var start = function() {
+			screen.orientation.lock('landscape-primary').then(
+				startInternal,
+				function() {
+				  alert('To start, rotate your screen to landscape.');
+
+				  var orientationChangeHandler = function() {
+					if (!screen.orientation.type.startsWith('landscape')) {
+					  return;
+					}
+					screen.orientation.removeEventListener('change', orientationChangeHandler);
+					startInternal();
+				}
+				screen.orientation.addEventListener('change', orientationChangeHandler);
+			});
+		}
+		window.onload = start;
+
+	</script>
+
+	<script src="sumado.js"></script>
+</body>
+</html>
